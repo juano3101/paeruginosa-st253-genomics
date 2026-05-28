@@ -257,7 +257,6 @@ which medaka_consensus
 medaka_consensus --help | head
 ```
 
-````markdown id="8rb3kl"
 ### Ejecutar pulido
 
 El script `medaka_polishing.sh` permite realizar el pulido de ensamblajes generados a partir de lecturas crudas o filtradas. Ambos enfoques fueron evaluados para comparar el efecto del filtrado sobre la calidad final de los ensamblajes, aunque se recomienda utilizar lecturas filtradas para obtener ensamblajes más consistentes y con menor ruido asociado a lecturas de baja calidad.
@@ -267,7 +266,7 @@ El script `medaka_polishing.sh` permite realizar el pulido de ensamblajes genera
 ```bash
 bash scripts/03_assembly/flye_assembly.sh data/seq raw
 bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/raw data/seq raw
-````
+```
 
 ### Ensamblaje y pulido utilizando lecturas filtradas
 
@@ -276,7 +275,6 @@ bash scripts/03_assembly/flye_assembly.sh data/filt filtered
 bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filt data/filt filtered
 ```
 
-````markdown
 ### Parámetros utilizados
 
 El pulido con `Medaka` fue realizado utilizando los siguientes parámetros principales:
