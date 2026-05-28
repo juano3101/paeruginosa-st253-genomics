@@ -12,6 +12,7 @@ set -euo pipefail
 THREADS=32 # ajustar según recursos disponibles
 MODE="genome" # BUSCO mode
 LINEAGE="pseudomonas_odb12" # BUSCO lineage dataset, ajustar según el organismo de interés
+REFERENCE="data/controles/PA14.fasta"
 
 # argumentos: carpeta de FASTA y nombre de corrida
 INPUT_DIR="${1:-results/polishing/medaka/filtered}"
@@ -30,6 +31,7 @@ FASTAS=( "$INPUT_DIR"/*/*.fasta ) # asume que los FASTA están en subcarpetas de
 # ejecutar QUAST
 # solo me devuelve el reporte general, no el detalle por muestra
 quast "${FASTAS[@]}" \
+  -r "$REFERENCE" \
   -o "$QUAST_OUT" \
   --threads "$THREADS" \
   > "${LOG_DIR}/quast_${RUN_NAME}.log" 2>&1
