@@ -3,7 +3,7 @@ Conda: 25.11.1
 R: 4.4.2
 RStudio: 2026.04.0+526
 
-SRA Toolkit:
+SRA Toolkit: 3.4.1
 NanoPlot:
 FastQC:
 MultiQC:

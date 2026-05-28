@@ -9,15 +9,15 @@ git clone https://github.com/juano3101/paeruginosa-st253-genomics.git
 cd paeruginosa-st253-genomics
 ```
 
-## Descargar secuencias
+# 00. Descargar secuencias
 
 Los datos brutos de secuenciación correspondientes a lecturas Nanopore fueron recuperados desde el repositorio público del NCBI bajo el BioProject `PRJNA946810`, el cual investigó el origen endógeno de infecciones por *Pseudomonas aeruginosa* en pacientes hospitalizados en Ecuador. Del total de aislados disponibles en dicho proyecto, se seleccionaron exclusivamente aquellos pertenecientes al sequence type ST-253, incluyendo aislados clínicos obtenidos de diferentes tipos de muestra y correspondientes a cinco pacientes hospitalizados.
 
-### Instalar SRA Toolkit
+## Instalar SRA Toolkit
 
-Para descargar las lecturas desde NCBI/SRA se requiere `sra-tools`. El repositorio oficial puede consultarse en:
+Para descargar las lecturas desde NCBI/SRA se requiere `sra-tools`.
 
-* [SRA Toolkit GitHub Repository](https://github.com/ncbi/sra-tools)
+* [SRA Toolkit GitHub Repository](https://github.com/ncbi/sra-tools?utm_source=chatgpt.com) (v3.4.1)
 
 Se recomienda instalarlo dentro de un ambiente Conda para mantener la reproducibilidad del pipeline.
 
@@ -26,14 +26,15 @@ conda create -n sra_tools -c bioconda -c conda-forge sra-tools -y
 conda activate sra_tools
 ```
 
-Verificar la instalación:
+Verificar instalación:
 
 ```bash
-fasterq-dump --version
-prefetch --version
+which fasterq-dump
+which prefetch
+vdb-config --version
 ```
 
-### Ejecutar descarga
+## Ejecutar descarga
 
 Con el ambiente `sra_tools` activado, ejecutar:
 
@@ -42,9 +43,9 @@ chmod +x scripts/00_download/download_data.sh
 bash scripts/00_download/download_data.sh
 ```
 
-Los archivos FASTQ descargados serán almacenados en:
+Verificar los archivos FASTQ descargados:
 
 ```bash
-data/raw_fastq/
+ls data/raw_fastq/
+ls data/controles/
 ```
-algo anda mal
