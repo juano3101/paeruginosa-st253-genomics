@@ -18,6 +18,6 @@ Snippy:
 SNP-sites:
 snp-dists:
 IQ-TREE:
-Prokka:
+Prokka: v1.15.6 
 Bakta:
 AMRFinderPlus:

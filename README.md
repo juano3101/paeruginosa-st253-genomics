@@ -237,16 +237,16 @@ ls results/assembly/
 
 Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` para corregir errores asociados a secuenciación Nanopore y mejorar la precisión de consenso de los ensamblajes.
 
-### Instalar Medaka
+## Instalar Medaka
 
 El repositorio oficial puede consultarse en:
 
 * [Medaka GitHub Repository](https://github.com/nanoporetech/medaka) (v2.2.2)
 
-Se recomienda instalar `Medaka` dentro de un ambiente Conda independiente.
+Se recomienda instalar `Medaka` dentro de un ambiente Conda independiente. La instalación mediante Conda incluye automáticamente dependencias necesarias como `samtools`, `minimap2`, `tabix` y `bgzip`.
 
 ```bash
-conda create -n medaka_env -c conda-forge -c bioconda medaka -y
+conda create -n medaka_env -c conda-forge -c nanoporetech -c bioconda medaka -y
 conda activate medaka_env
 ```
 
@@ -254,7 +254,9 @@ Verificar instalación:
 
 ```bash
 which medaka_consensus
-medaka_consensus --help | head
+medaka_consensus --version
+which minimap2
+which samtools
 ```
 
 ### Ejecutar pulido
@@ -278,19 +280,27 @@ bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filt data/filt 
 ### Parámetros utilizados
 
 El pulido con `Medaka` fue realizado utilizando los siguientes parámetros principales:
-El modelo de consenso utilizado para lecturas Nanopore R10.4.1 SUP.
 
 ```bash
+THREADS_PER_JOB=16
+MAX_JOBS=4
 MODEL="r1041_e82_400bps_sup_v5.2.0"
-````
+```
+
+`THREADS_PER_JOB` define el número de hilos utilizados por cada proceso de Medaka.
+
+`MAX_JOBS` define el número máximo de muestras procesadas en paralelo.
+
+`MODEL` corresponde al modelo de consenso utilizado para lecturas Oxford Nanopore R10.4.1 SUP.
 
 ### Resultados
 
 Revisar los ensamblajes pulidos generados en:
 
 ```bash
-ls results/polished/
+ls results/polishing/medaka/
 ```
+
 
 # 06. Control de calidad de ensamblajes
 
