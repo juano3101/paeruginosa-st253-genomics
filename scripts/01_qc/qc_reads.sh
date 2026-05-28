@@ -43,7 +43,7 @@ for archivo in "${archivos[@]}"; do
   muestra="$nombre_base"
   echo "Procesando $muestra"
 
-  mkdir -p "${NANO_DIR}/${muestra}" "${FASTQC_DIR}/${muestra}"}
+  mkdir -p "${NANO_DIR}/${muestra}" "${FASTQC_DIR}/${muestra}"
 
   # ejecutar NanoPlot
   NanoPlot --threads "$THREADS" --fastq "$archivo" -o "${NANO_DIR}/${muestra}"
