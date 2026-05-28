@@ -9,7 +9,7 @@ set -euo pipefail
 
 # ensamblaje y pulido utilizando lecturas filtradas
 # bash scripts/03_assembly/flye_assembly.sh data/filt filtered
-# bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filtered data/filt filtered
+# bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filt data/filt filtered
 
 
 # pulido de ensamblajes Flye con Medaka
