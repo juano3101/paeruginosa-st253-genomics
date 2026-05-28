@@ -8,6 +8,9 @@ Pipeline bioinformático reproducible para el análisis genómico de aislados cl
 git clone https://github.com/juano3101/paeruginosa-st253-genomics.git
 cd paeruginosa-st253-genomics
 ```
+# Flujo general del pipeline
+
+![Pipeline bioinformático](figures/pipeline.svg)
 
 # Índice
 
