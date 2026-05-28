@@ -109,7 +109,7 @@ El filtrado de lecturas Nanopore se realizó utilizando `Filtlong`, con el objet
 
 El repositorio oficial de `Filtlong` puede consultarse en:
 
-* [Filtlong GitHub Repository](https://github.com/rrwick/Filtlong?utm_source=chatgpt.com)
+* [Filtlong GitHub Repository](https://github.com/rrwick/filtlong)
 
 Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
 
@@ -141,9 +141,7 @@ bash scripts/02_filt/filter_reads.sh
 --min_mean_q 10
 ```
 
-````markdown id="6qbz2r"
 ## Resultados
-
 Revisar las lecturas filtradas generadas en:
 
 ```bash
