@@ -292,11 +292,102 @@ Revisar los ensamblajes pulidos generados en:
 ls results/polished/
 ```
 
-# 06. Anotación genómica
+# 06. Control de calidad de ensamblajes
 
-La anotación funcional de los ensamblajes bacterianos se realizó utilizando herramientas especializadas para identificación de genes codificantes, ARN ribosomal y otras características genómicas.
+La calidad de los ensamblajes fue evaluada utilizando `QUAST` y `BUSCO`. `QUAST` permitió obtener métricas estructurales del ensamblaje, como tamaño total, número de contigs, N50, contenido GC y comparación contra una referencia. `BUSCO` permitió estimar la completitud génica de cada ensamblaje utilizando el linaje `pseudomonas_odb12`.
 
-## 06.1 Anotación con Prokka
+## Instalar herramientas
+
+Los repositorios oficiales pueden consultarse en:
+
+* [QUAST GitHub Repository](https://github.com/ablab/quast)
+* [BUSCO GitLab Repository](https://gitlab.com/ezlab/busco)
+
+Se recomienda instalar ambas herramientas dentro de un mismo ambiente Conda.
+
+```bash
+conda create -n assembly_qc_env -c bioconda -c conda-forge quast busco -y
+conda activate assembly_qc_env
+```
+
+Verificar instalación:
+
+```bash
+quast --version
+busco --version
+```
+
+## Ejecutar control de calidad de ensamblajes
+
+El script `assembly_qc.sh` recibe dos argumentos:
+
+```bash
+bash scripts/06_assembly_qc/assembly_qc.sh <directorio_ensamblajes> <nombre_corrida>
+```
+
+El primer argumento corresponde al directorio donde se encuentran los archivos FASTA de los ensamblajes. El segundo argumento define el nombre de la corrida y se utiliza para organizar los resultados.
+
+### Ensamblajes crudos
+
+```bash
+chmod +x scripts/06_assembly_qc/assembly_qc.sh
+bash scripts/06_assembly_qc/assembly_qc.sh results/assembly/flye/raw raw
+```
+
+### Ensamblajes a partir de lecturas filtradas
+
+```bash
+bash scripts/06_assembly_qc/assembly_qc.sh results/assembly/flye/filtered filtered
+```
+
+### Ensamblajes pulidos con Medaka a partir de lecturas crudas
+
+```bash
+bash scripts/06_assembly_qc/assembly_qc.sh results/polishing/medaka/raw medaka_raw
+```
+
+### Ensamblajes pulidos con Medaka a partir de lecturas filtradas
+
+```bash
+bash scripts/06_assembly_qc/assembly_qc.sh results/polishing/medaka/filtered medaka_filtered
+```
+
+## Parámetros principales
+
+En el script se utilizan los siguientes parámetros:
+
+```bash
+THREADS=32
+MODE="genome"
+LINEAGE="pseudomonas_odb12"
+REFERENCE="data/controles/PA14.fasta"
+```
+
+`THREADS=32` define el número de hilos utilizados por `QUAST` y `BUSCO`. Puede ajustarse según los recursos disponibles del servidor.
+
+`MODE="genome"` indica que `BUSCO` evaluará ensamblajes genómicos.
+
+`LINEAGE="pseudomonas_odb12"` especifica el conjunto de genes conservados utilizado por `BUSCO`, correspondiente al linaje de *Pseudomonas*.
+
+`REFERENCE="data/controles/PA14.fasta"` indica el genoma de referencia utilizado por `QUAST` para la comparación estructural de los ensamblajes.
+
+## Resultados
+
+Revisar los resultados generados en:
+
+```bash
+ls results/assembly_qc/quast/
+ls results/assembly_qc/busco/
+ls logs/assembly_qc/
+```
+
+
+
+# 07. Anotación genómica
+
+A partir de aquí se utilizan solo los ensamblados despúes de filtrar y pulir con Medaka
+
+## 07.1 Anotación con Prokka
 
 La anotación genómica inicial fue realizada utilizando `Prokka`.
 
@@ -304,7 +395,7 @@ La anotación genómica inicial fue realizada utilizando `Prokka`.
 
 El repositorio oficial puede consultarse en:
 
-* [Prokka GitHub Repository](https://github.com/tseemann/prokka?utm_source=chatgpt.com)
+* [Prokka GitHub Repository](https://github.com/tseemann/prokka) (v1.15.6)
 
 Se recomienda instalar `Prokka` dentro de un ambiente Conda independiente.
 
@@ -335,7 +426,7 @@ Revisar las anotaciones generadas en:
 ls results/prokka/
 ```
 
-## 05.2 Anotación con Bakta
+## 07.2 Anotación con Bakta
 
 La anotación genómica complementaria fue realizada utilizando `Bakta`, una herramienta para la anotación rápida y estandarizada de genomas bacterianos.
 
@@ -388,6 +479,3 @@ Revisar las anotaciones generadas en:
 ```bash
 ls results/bakta/
 ```
-
-
-# 06. Control de calidad de ensamblajes
