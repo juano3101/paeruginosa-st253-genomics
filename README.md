@@ -146,7 +146,7 @@ bash scripts/02_filt/filter_reads.sh
 
 ## Parámetros utilizados
 
-Se eligió 
+Se eligió que se retengan únicamente lecturas con una longitud mínima de 1000 pb y se eliminen lecturas con calidad promedio Phred menor a 10.
 
 ```bash id="pqxq4n"
 --min_length 1000
@@ -157,7 +157,7 @@ Se eligió
 Revisar las lecturas filtradas generadas en:
 
 ```bash
-ls results/filtered/
+ls data/filt/
 ```
 
 # 03.Control de calidad de lecturas filtradas
@@ -173,7 +173,7 @@ conda activate qc_env
 ## Ejecutar control de calidad
 
 ```bash
-bash scripts/01_qc/qc_reads.sh results/filtered filtered
+bash scripts/01_qc/qc_reads.sh data/filt filt
 ```
 
 ## Resultados
@@ -181,7 +181,7 @@ bash scripts/01_qc/qc_reads.sh results/filtered filtered
 Revisar los resultados generados en:
 
 ```bash
-ls results/qc/filtered/
+ls results/qc/filt/
 ```
 
 # 04. Ensamblaje con Flye
