@@ -152,6 +152,114 @@ ls results/filtered/
 
 
 # 03. Control de calidad de lecturas filtradas
+
+Después del filtrado, se realizó nuevamente el control de calidad de las lecturas Nanopore para evaluar los cambios en la calidad promedio, longitud de lectura, contenido GC y distribución de las secuencias retenidas.
+
+Este paso utiliza el mismo ambiente Conda creado para el control de calidad de lecturas crudas.
+
+```bash
+conda activate qc_env
+```
+
+## Ejecutar control de calidad
+
+```bash
+bash scripts/01_qc/qc_reads.sh results/filtered filtered
+```
+
+## Resultados
+
+Revisar los resultados generados en:
+
+```bash
+ls results/qc/filtered/
+```
+
 # 04. Ensamblaje
+
+Los ensamblajes genómicos fueron generados a partir de lecturas Nanopore filtradas utilizando herramientas especializadas para secuenciación de lecturas largas.
+
+## 04.1 Ensamblaje con Flye
+
+El ensamblaje de novo de los genomas se realizó utilizando `Flye`, un ensamblador optimizado para lecturas largas Nanopore.
+
+### Instalar Flye
+
+El repositorio oficial puede consultarse en:
+
+* [Flye GitHub Repository](https://github.com/mikolmogorov/Flye?utm_source=chatgpt.com)
+
+Se recomienda instalar `Flye` dentro de un ambiente Conda independiente.
+
+```bash id="m4x95v"
+conda create -n flye_env -c bioconda -c conda-forge flye -y
+conda activate flye_env
+```
+
+Verificar instalación:
+
+```bash id="kt7yhj"
+which flye
+flye --version
+```
+
+### Ejecutar ensamblaje
+
+```bash id="tfv0mk"
+chmod +x scripts/03_assembly/flye_assembly.sh
+bash scripts/03_assembly/flye_assembly.sh
+```
+
+### Resultados
+
+Revisar los ensamblajes generados en:
+
+```bash id="8sl4h5"
+ls results/assembly/
+```
+
+# 05. Anotación genómica
+
+La anotación funcional de los ensamblajes bacterianos se realizó utilizando herramientas especializadas para identificación de genes codificantes, ARN ribosomal y otras características genómicas.
+
+## 05.1 Anotación con Prokka
+
+La anotación genómica inicial fue realizada utilizando `Prokka`.
+
+### Instalar Prokka
+
+El repositorio oficial puede consultarse en:
+
+* [Prokka GitHub Repository](https://github.com/tseemann/prokka?utm_source=chatgpt.com)
+
+Se recomienda instalar `Prokka` dentro de un ambiente Conda independiente.
+
+```bash id="r1r4dx"
+conda create -n prokka_env -c bioconda -c conda-forge prokka -y
+conda activate prokka_env
+```
+
+Verificar instalación:
+
+```bash id="7vk0ov"
+which prokka
+prokka --version
+```
+
+### Ejecutar anotación
+
+```bash id="wkpv6g"
+chmod +x scripts/03_assembly/prokka_annotation.sh
+bash scripts/03_assembly/prokka_annotation.sh
+```
+
+### Resultados
+
+Revisar las anotaciones generadas en:
+
+```bash id="k8rdsh"
+ls results/prokka/
+```
+
 # 05. Pulido
 # 06. Control de calidad de ensamblajes

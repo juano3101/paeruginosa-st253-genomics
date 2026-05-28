@@ -4,7 +4,7 @@ R: 4.4.2
 RStudio: 2026.04.0+526
 
 SRA Toolkit: 3.4.1
-NanoPlot:
+NanoPlot: 
 FastQC:
 MultiQC:
 Filtlong:
