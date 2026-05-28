@@ -94,12 +94,11 @@ bash scripts/01_qc/qc_reads.sh results/filtered filtered
 ```
 
 ## Resultados
-
-Los resultados serán almacenados en:
+Revisar Los resultados en:
 
 ```bash
-results/qc/raw/
-results/qc/filtered/
+ls results/qc/raw/
+ls results/qc/filtered/
 ```
 
 
