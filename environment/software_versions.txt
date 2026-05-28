@@ -8,8 +8,8 @@ NanoPlot: v1.46.2
 FastQC: v0.12.1
 MultiQC: v1.35
 Filtlong: v0.3.1
-Flye: 
-Medaka:
+Flye: v2.9.6
+Medaka: v2.2.2
 QUAST:
 BUSCO:
 Kraken2:

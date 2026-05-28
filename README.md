@@ -146,6 +146,8 @@ bash scripts/02_filt/filter_reads.sh
 
 ## Parámetros utilizados
 
+Se eligió 
+
 ```bash id="pqxq4n"
 --min_length 1000
 --min_mean_q 10
@@ -190,7 +192,7 @@ El ensamblaje de novo de los genomas se realizó utilizando `Flye`, un ensamblad
 
 El repositorio oficial puede consultarse en:
 
-* [Flye GitHub Repository](https://github.com/mikolmogorov/Flye)
+* [Flye GitHub Repository](https://github.com/mikolmogorov/Flye) (2.9.6)
 
 Se recomienda instalar `Flye` dentro de un ambiente Conda independiente.
 
@@ -231,7 +233,7 @@ Revisar los ensamblajes generados en:
 ls results/assembly/
 ```
 
-## 04.5 Pulido con Medaka
+# 05 Pulido con Medaka
 
 Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` para corregir errores asociados a secuenciación Nanopore y mejorar la precisión de consenso de los ensamblajes.
 
@@ -239,7 +241,7 @@ Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` 
 
 El repositorio oficial puede consultarse en:
 
-* [Medaka GitHub Repository](https://github.com/nanoporetech/medaka)
+* [Medaka GitHub Repository](https://github.com/nanoporetech/medaka) (v2.2.2)
 
 Se recomienda instalar `Medaka` dentro de un ambiente Conda independiente.
 
@@ -261,6 +263,16 @@ medaka_consensus --help | head
 chmod +x scripts/04_polish/medaka_polishing.sh
 bash scripts/04_polish/medaka_polishing.sh
 ```
+
+````markdown
+### Parámetros utilizados
+
+El pulido con `Medaka` fue realizado utilizando los siguientes parámetros principales:
+El modelo de consenso utilizado para lecturas Nanopore R10.4.1 SUP.
+
+```bash
+MODEL="r1041_e82_400bps_sup_v5.2.0"
+````
 
 ### Resultados
 
