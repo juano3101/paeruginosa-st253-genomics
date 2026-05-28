@@ -57,9 +57,9 @@ El control de calidad inicial de las lecturas Nanopore se realizó utilizando `F
 
 Las herramientas utilizadas pueden consultarse en sus repositorios oficiales:
 
-* [FastQC GitHub Repository](https://github.com/s-andrews/fastqc)
-* [NanoPlot GitHub Repository](https://github.com/wdecoster/nanoplot)
-* [MultiQC GitHub Repository](https://github.com/multiqc/multiqc)
+* [FastQC GitHub Repository](https://github.com/s-andrews/fastqc) v0.12.1
+* [NanoPlot GitHub Repository](https://github.com/wdecoster/nanoplot) v1.46.2
+* [MultiQC GitHub Repository](https://github.com/multiqc/multiqc) v1.35
 
 Se recomienda instalar todas las herramientas dentro de un mismo ambiente Conda.
 
@@ -146,10 +146,9 @@ Revisar las lecturas filtradas generadas en:
 
 ```bash
 ls results/filtered/
-````
+```
 
-
-# 03. Control de calidad de lecturas filtradas
+# 03.Control de calidad de lecturas filtradas
 
 Después del filtrado, se realizó nuevamente el control de calidad de las lecturas Nanopore para evaluar los cambios en la calidad promedio, longitud de lectura, contenido GC y distribución de las secuencias retenidas.
 
@@ -173,11 +172,7 @@ Revisar los resultados generados en:
 ls results/qc/filtered/
 ```
 
-# 04. Ensamblaje
-
-Los ensamblajes genómicos fueron generados a partir de lecturas Nanopore filtradas utilizando herramientas especializadas para secuenciación de lecturas largas.
-
-## 04.1 Ensamblaje con Flye
+# 04. Ensamblaje con Flye
 
 El ensamblaje de novo de los genomas se realizó utilizando `Flye`, un ensamblador optimizado para lecturas largas Nanopore.
 
