@@ -175,40 +175,51 @@ ls results/qc/filtered/
 
 El ensamblaje de novo de los genomas se realizó utilizando `Flye`, un ensamblador optimizado para lecturas largas Nanopore.
 
-### Instalar Flye
+## Instalar Flye
 
 El repositorio oficial puede consultarse en:
 
-* [Flye GitHub Repository](https://github.com/mikolmogorov/Flye?utm_source=chatgpt.com)
+* [Flye GitHub Repository](https://github.com/mikolmogorov/Flye)
 
 Se recomienda instalar `Flye` dentro de un ambiente Conda independiente.
 
-```bash id="m4x95v"
+```bash
 conda create -n flye_env -c bioconda -c conda-forge flye -y
 conda activate flye_env
 ```
 
 Verificar instalación:
 
-```bash id="kt7yhj"
+```bash
 which flye
 flye --version
 ```
 
-### Ejecutar ensamblaje
+## Ejecutar ensamblaje
 
-```bash id="tfv0mk"
+El script `flye_assembly.sh` permite ensamblar tanto lecturas crudas como lecturas filtradas.
+
+### Ensamblaje de lecturas crudas
+
+```bash
 chmod +x scripts/03_assembly/flye_assembly.sh
-bash scripts/03_assembly/flye_assembly.sh
+bash scripts/03_assembly/flye_assembly.sh data/seq raw
 ```
 
-### Resultados
+### Ensamblaje de lecturas filtradas
+
+```bash
+bash scripts/03_assembly/flye_assembly.sh data/filt filtered
+```
+
+## Resultados
 
 Revisar los ensamblajes generados en:
 
-```bash id="8sl4h5"
+```bash
 ls results/assembly/
 ```
+
 
 # 05. Anotación genómica
 
