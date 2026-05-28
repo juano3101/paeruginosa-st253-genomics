@@ -49,3 +49,63 @@ Verificar los archivos FASTQ descargados:
 ls data/raw_fastq/
 ls data/controles/
 ```
+# 01. Control de calidad de lecturas crudas
+
+El control de calidad inicial de las lecturas Nanopore se realizó utilizando `FastQC`, `NanoPlot` y `MultiQC`, con el objetivo de evaluar métricas como distribución de longitudes, calidad Phred, contenido GC y resumen global de calidad antes del filtrado de lecturas.
+
+## Instalar herramientas de control de calidad
+
+Las herramientas utilizadas pueden consultarse en sus repositorios oficiales:
+
+* [FastQC GitHub Repository](https://github.com/s-andrews/fastqc)
+* [NanoPlot GitHub Repository](https://github.com/wdecoster/nanoplot)
+* [MultiQC GitHub Repository](https://github.com/multiqc/multiqc)
+
+Se recomienda instalar todas las herramientas dentro de un mismo ambiente Conda.
+
+```bash
+conda create -n qc_env -c bioconda -c conda-forge fastqc nanoplot multiqc -y
+conda activate qc_env
+```
+
+Verificar instalación:
+
+```bash
+which fastqc
+which NanoPlot
+which multiqc
+```
+
+## Ejecutar control de calidad
+
+El script `qc_reads.sh` permite ejecutar el análisis de calidad tanto para lecturas crudas como filtradas.
+
+### Lecturas crudas
+
+```bash
+chmod +x scripts/01_qc/qc_reads.sh
+bash scripts/01_qc/qc_reads.sh data/seq raw
+```
+
+### Lecturas filtradas
+
+```bash
+bash scripts/01_qc/qc_reads.sh results/filtered filtered
+```
+
+## Resultados
+
+Los resultados serán almacenados en:
+
+```bash
+results/qc/raw/
+results/qc/filtered/
+```
+
+
+
+# 02. Filtrado de lecturas
+# 03. Control de calidad de lecturas filtradas
+# 04. Ensamblaje
+# 05. Pulido
+# 06. Control de calidad de ensamblajes
