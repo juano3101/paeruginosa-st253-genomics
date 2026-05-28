@@ -57,9 +57,9 @@ El control de calidad inicial de las lecturas Nanopore se realizó utilizando `F
 
 Las herramientas utilizadas pueden consultarse en sus repositorios oficiales:
 
-* [FastQC GitHub Repository](https://github.com/s-andrews/fastqc) v0.12.1
-* [NanoPlot GitHub Repository](https://github.com/wdecoster/nanoplot) v1.46.2
-* [MultiQC GitHub Repository](https://github.com/multiqc/multiqc) v1.35
+* [FastQC GitHub Repository](https://github.com/s-andrews/fastqc) (v0.12.1)
+* [NanoPlot GitHub Repository](https://github.com/wdecoster/nanoplot) (v1.46.2)
+* [MultiQC GitHub Repository](https://github.com/multiqc/multiqc) (v1.35)
 
 Se recomienda instalar todas las herramientas dentro de un mismo ambiente Conda.
 
@@ -109,7 +109,7 @@ El filtrado de lecturas Nanopore se realizó utilizando `Filtlong`, con el objet
 
 El repositorio oficial de `Filtlong` puede consultarse en:
 
-* [Filtlong GitHub Repository](https://github.com/rrwick/filtlong)
+* [Filtlong GitHub Repository](https://github.com/rrwick/filtlong) v0.3.1
 
 Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
 
@@ -117,7 +117,6 @@ Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
 conda create -n filtlong_env -c bioconda -c conda-forge filtlong -y
 conda activate filtlong_env
 ```
-
 Verificar instalación:
 
 ```bash id="8hgc6m"

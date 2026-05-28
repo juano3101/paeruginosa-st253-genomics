@@ -4,10 +4,10 @@ R: 4.4.2
 RStudio: 2026.04.0+526
 
 SRA Toolkit: 3.4.1
-NanoPlot: 
-FastQC:
-MultiQC:
-Filtlong:
+NanoPlot: v1.46.2
+FastQC: v0.12.1
+MultiQC: v1.35
+Filtlong: 
 Flye:
 Medaka:
 QUAST:
