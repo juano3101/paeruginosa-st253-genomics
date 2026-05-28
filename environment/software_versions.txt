@@ -1,0 +1,23 @@
+Sistema operativo: Ubuntu 20.04.6 LTS
+Conda: 25.11.1
+R: 4.4.2
+RStudio: 2026.04.0+526
+
+SRA Toolkit:
+NanoPlot:
+FastQC:
+MultiQC:
+Filtlong:
+Flye:
+Medaka:
+QUAST:
+BUSCO:
+Kraken2:
+MLST:
+Snippy:
+SNP-sites:
+snp-dists:
+IQ-TREE:
+Prokka:
+Bakta:
+AMRFinderPlus:
