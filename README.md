@@ -238,12 +238,50 @@ Revisar los ensamblajes generados en:
 ls results/assembly/
 ```
 
+## 04.5 Pulido con Medaka
 
-# 05. Anotación genómica
+Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` para corregir errores asociados a secuenciación Nanopore y mejorar la precisión de consenso de los ensamblajes.
+
+### Instalar Medaka
+
+El repositorio oficial puede consultarse en:
+
+* [Medaka GitHub Repository](https://github.com/nanoporetech/medaka)
+
+Se recomienda instalar `Medaka` dentro de un ambiente Conda independiente.
+
+```bash
+conda create -n medaka_env -c conda-forge -c bioconda medaka -y
+conda activate medaka_env
+```
+
+Verificar instalación:
+
+```bash
+which medaka_consensus
+medaka_consensus --help | head
+```
+
+### Ejecutar pulido
+
+```bash
+chmod +x scripts/04_polish/medaka_polishing.sh
+bash scripts/04_polish/medaka_polishing.sh
+```
+
+### Resultados
+
+Revisar los ensamblajes pulidos generados en:
+
+```bash
+ls results/polished/
+```
+
+# 06. Anotación genómica
 
 La anotación funcional de los ensamblajes bacterianos se realizó utilizando herramientas especializadas para identificación de genes codificantes, ARN ribosomal y otras características genómicas.
 
-## 05.1 Anotación con Prokka
+## 06.1 Anotación con Prokka
 
 La anotación genómica inicial fue realizada utilizando `Prokka`.
 
@@ -282,5 +320,59 @@ Revisar las anotaciones generadas en:
 ls results/prokka/
 ```
 
-# 05. Pulido
+## 05.2 Anotación con Bakta
+
+La anotación genómica complementaria fue realizada utilizando `Bakta`, una herramienta para la anotación rápida y estandarizada de genomas bacterianos.
+
+### Instalar Bakta
+
+El repositorio oficial puede consultarse en:
+
+* [Bakta GitHub Repository](https://github.com/oschwengers/bakta)
+
+Se recomienda instalar `Bakta` dentro de un ambiente Conda independiente.
+
+```bash
+conda create -n bakta_env -c bioconda -c conda-forge bakta -y
+conda activate bakta_env
+```
+
+Verificar instalación:
+
+```bash
+which bakta
+bakta --version
+```
+
+### Descargar base de datos de Bakta
+
+Antes de ejecutar la anotación, se debe descargar y configurar la base de datos de Bakta.
+
+```bash
+mkdir -p databases/bakta
+bakta_db download --output databases/bakta
+```
+
+Verificar la base de datos:
+
+```bash
+ls databases/bakta/
+```
+
+### Ejecutar anotación
+
+```bash
+chmod +x scripts/03_assembly/bakta_annotation.sh
+bash scripts/03_assembly/bakta_annotation.sh
+```
+
+### Resultados
+
+Revisar las anotaciones generadas en:
+
+```bash
+ls results/bakta/
+```
+
+
 # 06. Control de calidad de ensamblajes
