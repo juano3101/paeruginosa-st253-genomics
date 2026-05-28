@@ -17,7 +17,7 @@ Los datos brutos de secuenciación correspondientes a lecturas Nanopore fueron r
 
 Para descargar las lecturas desde NCBI/SRA se requiere `sra-tools`. El repositorio oficial puede consultarse en:
 
-* [SRA Toolkit GitHub Repository](https://github.com/ncbi/sra-tools?utm_source=chatgpt.com)
+* [SRA Toolkit GitHub Repository](https://github.com/ncbi/sra-tools)
 
 Se recomienda instalarlo dentro de un ambiente Conda para mantener la reproducibilidad del pipeline.
 
@@ -46,3 +46,4 @@ Los archivos FASTQ descargados serán almacenados en:
 ```bash
 data/raw_fastq/
 ```
+algo anda mal
