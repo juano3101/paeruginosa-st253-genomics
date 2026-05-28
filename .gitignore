@@ -216,3 +216,38 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+
+```gitignore
+# =========================
+# BIOINFORMATICA
+# =========================
+data/seq/
+data/raw/
+data/fastq/
+
+databases/
+db/
+
+results/
+logs/
+work/
+
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.sam
+*.vcf
+*.bcf
+*.fasta
+*.fa
+*.fna
+*.gfa
+*.mmi
+
+tmp/
+temp/
+```
