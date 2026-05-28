@@ -38,6 +38,7 @@ prefetch --version
 Con el ambiente `sra_tools` activado, ejecutar:
 
 ```bash
+chmod +x scripts/00_download/download_data.sh
 bash scripts/00_download/download_data.sh
 ```
 
