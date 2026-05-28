@@ -71,12 +71,17 @@ Las herramientas utilizadas pueden consultarse en sus repositorios oficiales:
 * [NanoPlot GitHub Repository](https://github.com/wdecoster/nanoplot) (v1.46.2)
 * [MultiQC GitHub Repository](https://github.com/multiqc/multiqc) (v1.35)
 
+
 Se recomienda instalar todas las herramientas dentro de un mismo ambiente Conda.
 
 ```bash
-conda create -n qc_env -c bioconda -c conda-forge fastqc nanoplot multiqc -y
+conda create -n qc_env python=3.11 -y
 conda activate qc_env
-```
+
+pip install NanoPlot
+conda install -c bioconda -c conda-forge fastqc -y
+conda install -c bioconda -c conda-forge multiqc -y
+````
 
 Verificar instalación:
 
