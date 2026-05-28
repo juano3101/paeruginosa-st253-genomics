@@ -9,49 +9,40 @@ git clone https://github.com/juano3101/paeruginosa-st253-genomics.git
 cd paeruginosa-st253-genomics
 ```
 
-## Estructura del proyecto
+## Descargar secuencias
+
+Los datos brutos de secuenciación correspondientes a lecturas Nanopore fueron recuperados desde el repositorio público del NCBI bajo el BioProject `PRJNA946810`, el cual investigó el origen endógeno de infecciones por *Pseudomonas aeruginosa* en pacientes hospitalizados en Ecuador. Del total de aislados disponibles en dicho proyecto, se seleccionaron exclusivamente aquellos pertenecientes al sequence type ST-253, incluyendo aislados clínicos obtenidos de diferentes tipos de muestra y correspondientes a cinco pacientes hospitalizados.
+
+### Instalar SRA Toolkit
+
+Para descargar las lecturas desde NCBI/SRA se requiere `sra-tools`. El repositorio oficial puede consultarse en:
+
+* [SRA Toolkit GitHub Repository](https://github.com/ncbi/sra-tools?utm_source=chatgpt.com)
+
+Se recomienda instalarlo dentro de un ambiente Conda para mantener la reproducibilidad del pipeline.
 
 ```bash
-scripts/
-├── 00_download
-├── 01_qc
-├── 02_filt
-├── 03_assembly
-├── 04_polish
-├── 05_assembly_qc
+conda create -n sra_tools -c bioconda -c conda-forge sra-tools -y
+conda activate sra_tools
 ```
 
-## Requerimientos
-
-* Linux Ubuntu 20.04+
-* Conda 25.11.1
-* R
-* Python 3
-* Snippy
-* Flye
-* Medaka
-* Kraken2
-* QUAST
-* BUSCO
-* IQ-TREE
-
-## Crear ambientes Conda
+Verificar la instalación:
 
 ```bash
-conda env create -f environment/snippy_clean.yml
-conda activate snippy_clean
+fasterq-dump --version
+prefetch --version
 ```
 
-## Flujo general del pipeline
+### Ejecutar descarga
 
-1. Descarga de datos
-2. Control de calidad
-3. Filtrado de lecturas
-4. Ensamblaje genómico
-5. Pulido de ensamblajes
-6. Evaluación de calidad
-7. Filogenómica
-8. Resistoma
+Con el ambiente `sra_tools` activado, ejecutar:
 
+```bash
+bash scripts/00_download/download_data.sh
 ```
+
+Los archivos FASTQ descargados serán almacenados en:
+
+```bash
+data/raw_fastq/
 ```
