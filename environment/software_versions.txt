@@ -1,5 +1,5 @@
 Sistema operativo: Ubuntu 20.04.6 LTS
-Conda: 25.11.1
+Conda: 26.1.1
 R: 4.4.2
 RStudio: 2026.04.0+526
 
@@ -7,8 +7,8 @@ SRA Toolkit: 3.4.1
 NanoPlot: v1.46.2
 FastQC: v0.12.1
 MultiQC: v1.35
-Filtlong: 
-Flye:
+Filtlong: v0.3.1
+Flye: 
 Medaka:
 QUAST:
 BUSCO:

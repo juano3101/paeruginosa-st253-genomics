@@ -119,7 +119,7 @@ El filtrado de lecturas Nanopore se realizó utilizando `Filtlong`, con el objet
 
 El repositorio oficial de `Filtlong` puede consultarse en:
 
-* [Filtlong GitHub Repository](https://github.com/rrwick/filtlong) v0.3.1
+* [Filtlong GitHub Repository](https://github.com/rrwick/filtlong) (v0.3.1)
 
 Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
 
