@@ -10,8 +10,8 @@ MultiQC: v1.35
 Filtlong: v0.3.1
 Flye: v2.9.6
 Medaka: v2.2.2
-QUAST:
-BUSCO:
+QUAST: v5.3.0
+BUSCO: v1.0.0
 Kraken2:
 MLST:
 Snippy:

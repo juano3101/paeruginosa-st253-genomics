@@ -310,8 +310,8 @@ La calidad de los ensamblajes fue evaluada utilizando `QUAST` y `BUSCO`. `QUAST`
 
 Los repositorios oficiales pueden consultarse en:
 
-* [QUAST GitHub Repository](https://github.com/ablab/quast)
-* [BUSCO GitLab Repository](https://gitlab.com/ezlab/busco)
+* [QUAST GitHub Repository](https://github.com/ablab/quast) (v5.3.0)
+* [BUSCO GitLab Repository](https://gitlab.com/ezlab/busco) (v1.0.0)
 
 Se recomienda instalar ambas herramientas dentro de un mismo ambiente Conda.
 
@@ -392,12 +392,121 @@ ls logs/assembly_qc/
 ```
 
 
+# 07. Taxonomía
 
-# 07. Anotación genómica
+
+# 08. Taxonomía
 
 A partir de aquí se utilizan solo los ensamblados despúes de filtrar y pulir con Medaka
 
-## 07.1 Anotación con Prokka
+# 07. Clasificación taxonómica
+
+La clasificación taxonómica de ensamblajes y controles se realizó utilizando `Kraken2`, con el objetivo de verificar la identidad taxonómica de los ensamblajes generados y detectar posibles eventos de contaminación o mezclas taxonómicas.
+
+## Instalar Kraken2
+
+El repositorio oficial puede consultarse en:
+
+* [Kraken2 GitHub Repository](https://github.com/DerrickWood/kraken2?utm_source=chatgpt.com)
+
+Se recomienda instalar `Kraken2` dentro de un ambiente Conda independiente.
+
+```bash id="q7v4ic"
+conda create -n kraken2_env -c bioconda -c conda-forge kraken2 -y
+conda activate kraken2_env
+```
+
+Verificar instalación:
+
+```bash id="4fqzh3"
+kraken2 --version
+```
+
+## Descargar base de datos Kraken2
+
+En este pipeline se utilizó la base de datos precompilada estándar de 8 GB (`standard_08gb`).
+
+```bash id="11icrc"
+cd databases/kraken2
+
+wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20240904.tar.gz
+
+mkdir -p standard_08gb
+
+tar -xzvf k2_standard_08gb_20240904.tar.gz -C standard_08gb/
+
+rm k2_standard_08gb_20240904.tar.gz
+```
+
+Verificar la base descargada:
+
+```bash id="8c4dsd"
+ls databases/kraken2/standard_08gb/
+```
+
+## Ejecutar clasificación taxonómica
+
+El script `kraken2_taxonomy.sh` permite clasificar ensamblajes pulidos y controles de referencia.
+
+```bash id="ly3k1y"
+chmod +x scripts/07_taxonomy/kraken2_taxonomy.sh
+bash scripts/07_taxonomy/kraken2_taxonomy.sh
+```
+
+Por defecto, el script utiliza:
+
+```bash id="z3gxdp"
+results/polishing/medaka/filtered
+```
+
+como directorio de ensamblajes y:
+
+```bash id="f14ol7"
+data/controles
+```
+
+como directorio de controles.
+
+## Parámetros utilizados
+
+En el script se utilizaron los siguientes parámetros principales:
+
+```bash id="v3j9pk"
+THREADS=8
+DB_PATH="databases/kraken2/standard_08gb"
+```
+
+`THREADS=8` define el número de hilos utilizados durante la clasificación taxonómica.
+
+`DB_PATH` corresponde a la ubicación de la base de datos Kraken2 estándar de 8 GB utilizada en el análisis.
+
+Durante la clasificación se emplearon además los siguientes parámetros de Kraken2:
+
+```bash id="78a9y5"
+--use-names
+--report
+--output
+```
+
+`--use-names` permite mostrar nombres taxonómicos en lugar de únicamente identificadores numéricos.
+
+`--report` genera un resumen tabular de abundancia taxonómica.
+
+`--output` genera el detalle completo de clasificación para cada secuencia analizada.
+
+## Resultados
+
+Revisar los resultados generados en:
+
+```bash id="ctvpxf"
+ls results/taxonomy/kraken2/
+ls logs/taxonomy/kraken2/
+```
+
+
+
+
+## 09.1 Anotación con Prokka
 
 La anotación genómica inicial fue realizada utilizando `Prokka`.
 
@@ -436,7 +545,7 @@ Revisar las anotaciones generadas en:
 ls results/prokka/
 ```
 
-## 07.2 Anotación con Bakta
+## 09.2 Anotación con Bakta
 
 La anotación genómica complementaria fue realizada utilizando `Bakta`, una herramienta para la anotación rápida y estandarizada de genomas bacterianos.
 

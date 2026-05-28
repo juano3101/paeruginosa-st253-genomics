@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-
-
 # clasificación taxonómica de controles y ensamblajes con Kraken2
 
 THREADS=8
