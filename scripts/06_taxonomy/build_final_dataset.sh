@@ -4,7 +4,6 @@ set -euo pipefail
 # crear dataset final curado de ensamblajes
 
 INPUT_DIR="results/polishing/medaka/filtered"
-CONTROL_DIR="data/controles"
 OUT_DIR="data/final_fastas"
 
 mkdir -p "$OUT_DIR"
@@ -32,14 +31,6 @@ for dir in "$INPUT_DIR"/*; do
     echo "No se encontró: $fasta"
   fi
 done
-
-echo "Copiando controles"
-
-# referencia interna
-cp "${CONTROL_DIR}/PA14.fasta" "${OUT_DIR}/PA14.fasta"
-
-# outgroup
-cp "${CONTROL_DIR}/PAO1.fasta" "${OUT_DIR}/PAO1.fasta"
 
 echo "Dataset final disponible en: $OUT_DIR"
 
