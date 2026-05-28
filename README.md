@@ -105,18 +105,11 @@ chmod +x scripts/01_qc/qc_reads.sh
 bash scripts/01_qc/qc_reads.sh data/seq raw
 ```
 
-### Lecturas filtradas
-
-```bash
-bash scripts/01_qc/qc_reads.sh results/filtered filtered
-```
-
 ## Resultados
 Revisar Los resultados en:
 
 ```bash
 ls results/qc/raw/
-ls results/qc/filtered/
 ```
 
 # 02. Filtrado de lecturas
