@@ -9,6 +9,16 @@ git clone https://github.com/juano3101/paeruginosa-st253-genomics.git
 cd paeruginosa-st253-genomics
 ```
 
+# Índice
+
+- [00. Descargar secuencias](#00-descargar-secuencias)
+- [01. Control de calidad de lecturas crudas](#01-control-de-calidad-de-lecturas-crudas)
+- [02. Filtrado de lecturas](#02-filtrado-de-lecturas)
+- [03. Control de calidad de lecturas filtradas](#03-control-de-calidad-de-lecturas-filtradas)
+- [04. Ensamblaje con Flye](#04-ensamblaje-con-flye)
+- [05. Anotación genómica](#05-anotación-genómica)
+  - [05.1 Anotación con Prokka](#051-anotación-con-prokka)
+
 # 00. Descargar secuencias
 
 Los datos brutos de secuenciación correspondientes a lecturas Nanopore fueron recuperados desde el repositorio público del NCBI bajo el BioProject `PRJNA946810`, el cual investigó el origen endógeno de infecciones por *Pseudomonas aeruginosa* en pacientes hospitalizados en Ecuador. Del total de aislados disponibles en dicho proyecto, se seleccionaron exclusivamente aquellos pertenecientes al sequence type ST-253, incluyendo aislados clínicos obtenidos de diferentes tipos de muestra y correspondientes a cinco pacientes hospitalizados.
