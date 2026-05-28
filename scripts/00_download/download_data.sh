@@ -43,7 +43,7 @@ for item in "${MUESTRAS[@]}"; do
   fasterq-dump "$SRR" -e "$THREADS" # descargar lecturas desde SRA con los hilos especificados
   if [[ -f "${SRR}.fastq" ]]; then # renombrar y mover archivo FASTQ
     mv "${SRR}.fastq" \
-       "${SEQ_DIR}/${MUESTRA}__${SRR}.fastq" # renombrar el archivo con el formato "Nombre_Muestra_SRA.fastq"
+       "${SEQ_DIR}/${MUESTRA}__${SRR}.fastq" # renombrar el archivo con el formato "Nombre_Muestra__SRR.fastq"
   else
     echo "No encontré archivos FASTQ esperados para $SRR" # mensaje de error si no se encuentran los archivos FASTQ
     exit 1
