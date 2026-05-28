@@ -101,9 +101,56 @@ ls results/qc/raw/
 ls results/qc/filtered/
 ```
 
-
-
 # 02. Filtrado de lecturas
+
+El filtrado de lecturas Nanopore se realizó utilizando `Filtlong`, con el objetivo de eliminar lecturas cortas y de baja calidad antes del ensamblaje genómico. Se aplicaron filtros mínimos de longitud y calidad promedio Phred para mejorar la calidad global de las lecturas utilizadas en los análisis posteriores.
+
+## Instalar Filtlong
+
+El repositorio oficial de `Filtlong` puede consultarse en:
+
+* [Filtlong GitHub Repository](https://github.com/rrwick/Filtlong?utm_source=chatgpt.com)
+
+Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
+
+```bash id="5m9t3v"
+conda create -n filtlong_env -c bioconda -c conda-forge filtlong -y
+conda activate filtlong_env
+```
+
+Verificar instalación:
+
+```bash id="8hgc6m"
+which filtlong
+filtlong --help | head
+```
+
+## Ejecutar filtrado
+
+El script `filter_reads.sh` realiza el filtrado automático de lecturas para todas las muestras utilizando los parámetros definidos en el pipeline.
+
+```bash id="7o4r1z"
+chmod +x scripts/02_filt/filter_reads.sh
+bash scripts/02_filt/filter_reads.sh
+```
+
+## Parámetros utilizados
+
+```bash id="pqxq4n"
+--min_length 1000
+--min_mean_q 10
+```
+
+````markdown id="6qbz2r"
+## Resultados
+
+Revisar las lecturas filtradas generadas en:
+
+```bash
+ls results/filtered/
+````
+
+
 # 03. Control de calidad de lecturas filtradas
 # 04. Ensamblaje
 # 05. Pulido
