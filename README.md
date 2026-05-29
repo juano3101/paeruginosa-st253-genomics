@@ -373,6 +373,8 @@ kraken2 --version
 En este pipeline se utilizó la base de datos precompilada estándar de 8 GB (`standard_08gb`).
 
 ```bash id="11icrc"
+mkdir -p databases/kraken2
+
 cd databases/kraken2
 
 wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20240904.tar.gz
