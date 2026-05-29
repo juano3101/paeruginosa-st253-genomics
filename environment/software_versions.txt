@@ -19,5 +19,5 @@ SNP-sites:
 snp-dists:
 IQ-TREE:
 Prokka: v1.15.6 
-Bakta:
-AMRFinderPlus:
+Bakta: 
+AMRFinderPlus: 

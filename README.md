@@ -517,6 +517,112 @@ results/mlst/
 ```
 # 08. Filogenia
 
+# 08. Filogenia
+
+El análisis filogenómico se realizó a partir de SNPs del core genome utilizando `Snippy`, `SNP-sites`, `IQ-TREE` y `snp-dists`. Este flujo permitió mapear los ensamblajes curados contra una referencia interna, construir un alineamiento de SNPs, inferir un árbol filogenético por máxima verosimilitud y calcular una matriz de distancias genéticas entre aislados.
+
+## Instalar herramientas
+
+Las herramientas principales pueden instalarse en un ambiente Conda independiente.
+
+```bash
+conda create -n phylogeny_env -y
+conda activate phylogeny_env
+conda install -c conda-forge -c bioconda snippy -y
+conda install -c bioconda iqtree -y
+```
+
+Verificar instalación:
+
+```bash
+which snippy
+which snippy-core
+which snp-sites
+which snp-dists
+which iqtree3
+snippy --version
+iqtree3 --version
+```
+
+## Ejecutar análisis filogenómico
+
+El script `snippy_iqtree.sh` ejecuta el análisis filogenómico completo usando como entrada los ensamblajes finales curados, la referencia interna `PA14` y el outgroup `PAO1`.
+
+```bash
+chmod +x scripts/08_phylogeny/snippy_iqtree.sh
+bash scripts/08_phylogeny/snippy_iqtree.sh
+```
+
+Por defecto, el script utiliza:
+
+```bash
+data/final_fastas
+data/controles/PA14.fasta
+data/controles/PAO1.fasta
+```
+
+También puede ejecutarse especificando manualmente las rutas de entrada:
+
+```bash
+bash scripts/08_phylogeny/snippy_iqtree.sh data/final_fastas data/controles/PA14.fasta data/controles/PAO1.fasta
+```
+
+## Parámetros utilizados
+
+En el script se utilizaron los siguientes parámetros principales:
+
+```bash
+THREADS=4
+MODEL="GTR+ASC"
+BOOTSTRAP=1000
+ALRT=1000
+```
+
+`THREADS=4` define el número de hilos utilizados durante el análisis.
+
+`MODEL="GTR+ASC"` corresponde al modelo de sustitución utilizado en IQ-TREE para el alineamiento de SNPs, incorporando corrección por ausencia de sitios constantes.
+
+`BOOTSTRAP=1000` define el número de réplicas de ultrafast bootstrap.
+
+`ALRT=1000` define el número de réplicas del test SH-aLRT para evaluar soporte nodal.
+
+Durante la inferencia filogenética se emplearon además los siguientes parámetros de IQ-TREE:
+
+```bash
+-B 1000
+--alrt 1000
+-bnni
+-redo
+```
+
+`-B 1000` ejecuta ultrafast bootstrap con 1000 réplicas.
+
+`--alrt 1000` ejecuta el test SH-aLRT con 1000 réplicas.
+
+`-bnni` aplica una corrección para reducir sobreestimación de soporte en ultrafast bootstrap.
+
+`-redo` permite sobrescribir resultados previos.
+
+## Resultados
+
+Los resultados del análisis filogenómico se generan en:
+
+```bash
+results/phylogeny/snippy_iqtree/
+logs/phylogeny/
+```
+
+Los archivos principales generados son:
+
+```bash
+results/phylogeny/snippy_iqtree/core.full.aln
+results/phylogeny/snippy_iqtree/core.snp.aln
+results/phylogeny/snippy_iqtree/core.snp.aln.treefile
+results/phylogeny/snippy_iqtree/core.snp.aln.iqtree
+results/phylogeny/snippy_iqtree/core.snp.aln.log
+results/phylogeny/snippy_iqtree/snippy_distancias.tsv
+```
+
 
 # 09. Anotación genómica
 
