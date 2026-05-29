@@ -290,14 +290,12 @@ Si la ejecución finaliza correctamente, Medaka generará múltiples archivos de
 ### Ensamblaje y pulido utilizando lecturas crudas
 
 ```bash
-bash scripts/03_assembly/flye_assembly.sh data/seq raw
 bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/raw data/seq raw
 ```
 
 ### Ensamblaje y pulido utilizando lecturas filtradas
 
 ```bash
-bash scripts/03_assembly/flye_assembly.sh data/filt filtered
 bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filtered data/filt filtered
 ```
 
