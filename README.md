@@ -304,15 +304,8 @@ bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filtered data/f
 El pulido con `Medaka` fue realizado utilizando los siguientes parámetros principales:
 
 ```bash
-THREADS_PER_JOB=16
-MAX_JOBS=4
 MODEL="r1041_e82_400bps_sup_v5.2.0"
 ```
-
-`THREADS_PER_JOB` define el número de hilos utilizados por cada proceso de Medaka.
-
-`MAX_JOBS` define el número máximo de muestras procesadas en paralelo.
-
 `MODEL` corresponde al modelo de consenso utilizado para lecturas Oxford Nanopore R10.4.1 SUP.
 
 ## Resultados
@@ -423,12 +416,9 @@ ls logs/assembly_qc/
 
 # 07. Taxonomía
 
-
-# 08. Taxonomía
-
 A partir de aquí se utilizan solo los ensamblados despúes de filtrar y pulir con Medaka
 
-# 07. Clasificación taxonómica
+# 07.1 Clasificación taxonómica
 
 La clasificación taxonómica de ensamblajes y controles se realizó utilizando `Kraken2`, con el objetivo de verificar la identidad taxonómica de los ensamblajes generados y detectar posibles eventos de contaminación o mezclas taxonómicas.
 
@@ -533,6 +523,7 @@ ls logs/taxonomy/kraken2/
 ```
 
 
+# 09 Anotación
 
 
 ## 09.1 Anotación con Prokka
