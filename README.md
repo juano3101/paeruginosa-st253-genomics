@@ -415,7 +415,7 @@ La clasificación taxonómica de ensamblajes y controles se realizó utilizando 
 
 El repositorio oficial puede consultarse en:
 
-* [Kraken2 GitHub Repository](https://github.com/DerrickWood/kraken2?utm_source=chatgpt.com)
+* [Kraken2 GitHub Repository](https://github.com/DerrickWood/kraken2) (v2.17.1)
 
 Se recomienda instalar `Kraken2` dentro de un ambiente Conda independiente.
 
@@ -473,21 +473,6 @@ como directorio de ensamblajes y:
 data/controles
 ```
 
-como directorio de controles.
-
-## Parámetros utilizados
-
-En el script se utilizaron los siguientes parámetros principales:
-
-```bash id="v3j9pk"
-THREADS=8
-DB_PATH="databases/kraken2/standard_08gb"
-```
-
-`THREADS=8` define el número de hilos utilizados durante la clasificación taxonómica.
-
-`DB_PATH` corresponde a la ubicación de la base de datos Kraken2 estándar de 8 GB utilizada en el análisis.
-
 Durante la clasificación se emplearon además los siguientes parámetros de Kraken2:
 
 ```bash id="78a9y5"
@@ -508,7 +493,6 @@ Revisar los resultados generados en:
 
 ```bash id="ctvpxf"
 ls results/taxonomy/kraken2/
-ls logs/taxonomy/kraken2/
 ```
 
 
