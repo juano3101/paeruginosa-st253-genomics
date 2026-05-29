@@ -233,9 +233,10 @@ Revisar los ensamblajes generados en:
 ls results/assembly/
 ```
 
+
 # 05 Pulido con Medaka
 
-Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` para corregir errores asociados a secuenciación Nanopore y mejorar la precisión de consenso de los ensamblajes.
+Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` para corregir errores asociados a la secuenciación Nanopore y mejorar la precisión de consenso de los ensamblajes.
 
 ## Instalar Medaka
 
@@ -243,11 +244,16 @@ El repositorio oficial puede consultarse en:
 
 * [Medaka GitHub Repository](https://github.com/nanoporetech/medaka) (v2.2.2)
 
-Se recomienda instalar `Medaka` dentro de un ambiente Conda independiente. La instalación mediante Conda incluye automáticamente dependencias necesarias como `samtools`, `minimap2`, `tabix` y `bgzip`.
+En este proyecto se utilizó `Medaka v2.2.2` instalado mediante `pip` dentro de un ambiente Conda independiente. Esta estrategia permitió evitar problemas de compatibilidad con `GLIBC` observados al instalar directamente desde Conda en Ubuntu 20.04.
 
 ```bash
-conda create -n medaka_env -c conda-forge -c nanoporetech -c bioconda medaka -y
+conda create -n medaka_env python=3.11 -y
 conda activate medaka_env
+conda install -c bioconda minimap2 samtools htslib -y
+conda install -c bioconda bcftools -y
+pip install --upgrade pip
+pip install pyabpoa
+pip install medaka
 ```
 
 Verificar instalación:
@@ -257,11 +263,29 @@ which medaka_consensus
 medaka_consensus --version
 which minimap2
 which samtools
+which bcftools
+which bgzip
+which tabix
 ```
 
-### Ejecutar pulido
+## Ejecutar pulido
 
-El script `medaka_polishing.sh` permite realizar el pulido de ensamblajes generados a partir de lecturas crudas o filtradas. Ambos enfoques fueron evaluados para comparar el efecto del filtrado sobre la calidad final de los ensamblajes, aunque se recomienda utilizar lecturas filtradas para obtener ensamblajes más consistentes y con menor ruido asociado a lecturas de baja calidad.
+### Prueba de funcionamiento
+
+Debido al elevado número de dependencias requeridas por Medaka (`samtools`, `minimap2`, `bcftools`, `bgzip`, `tabix`, `pyabpoa` y bibliotecas de Python), se recomienda ejecutar inicialmente el pulido sobre una única muestra para verificar que la instalación y todas las dependencias funcionan correctamente antes de procesar el conjunto completo de datos.
+
+El siguiente comando permite ejecutar Medaka sobre una muestra individual:
+
+```bash
+medaka_consensus \
+-i data/seq/Blood_P11__SRR26135180.fastq \
+-d results/assembly/flye/raw/Blood_P11__SRR26135180/Blood_P11__SRR26135180_flye_raw.fasta \
+-o prueba_medaka \
+-t 16 \
+-m r1041_e82_400bps_sup_v5.2.0
+```
+
+Si la ejecución finaliza correctamente, Medaka generará múltiples archivos dentro del directorio de salida especificado (`prueba_medaka`), incluyendo el ensamblaje pulido final. Una vez validado el funcionamiento de la herramienta, se recomienda ejecutar el script completo para procesar todas las muestras del estudio.
 
 ### Ensamblaje y pulido utilizando lecturas crudas
 
@@ -274,10 +298,10 @@ bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/raw data/seq ra
 
 ```bash
 bash scripts/03_assembly/flye_assembly.sh data/filt filtered
-bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filt data/filt filtered
+bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filtered data/filt filtered
 ```
 
-### Parámetros utilizados
+## Parámetros utilizados
 
 El pulido con `Medaka` fue realizado utilizando los siguientes parámetros principales:
 
@@ -293,12 +317,19 @@ MODEL="r1041_e82_400bps_sup_v5.2.0"
 
 `MODEL` corresponde al modelo de consenso utilizado para lecturas Oxford Nanopore R10.4.1 SUP.
 
-### Resultados
+## Resultados
 
-Revisar los ensamblajes pulidos generados en:
+Los ensamblajes pulidos se generan en:
 
 ```bash
-ls results/polishing/medaka/
+results/polishing/medaka/raw
+results/polishing/medaka/filtered
+```
+
+Para revisar los archivos generados:
+
+```bash
+find results/polishing/medaka -name "*.fasta"
 ```
 
 
