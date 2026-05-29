@@ -313,14 +313,8 @@ MODEL="r1041_e82_400bps_sup_v5.2.0"
 Los ensamblajes pulidos se generan en:
 
 ```bash
-results/polishing/medaka/raw
-results/polishing/medaka/filtered
-```
-
-Para revisar los archivos generados:
-
-```bash
-find results/polishing/medaka -name "*.fasta"
+ls results/polishing/medaka/raw
+ls results/polishing/medaka/filtered
 ```
 
 
@@ -333,7 +327,7 @@ La calidad de los ensamblajes fue evaluada utilizando `QUAST` y `BUSCO`. `QUAST`
 Los repositorios oficiales pueden consultarse en:
 
 * [QUAST GitHub Repository](https://github.com/ablab/quast) (v5.3.0)
-* [BUSCO GitLab Repository](https://gitlab.com/ezlab/busco) (v1.0.0)
+* [BUSCO GitLab Repository](https://gitlab.com/ezlab/busco) (v6.0.0)
 
 Se recomienda instalar ambas herramientas dentro de un mismo ambiente Conda.
 
@@ -354,7 +348,7 @@ busco --version
 El script `assembly_qc.sh` recibe dos argumentos:
 
 ```bash
-bash scripts/06_assembly_qc/assembly_qc.sh <directorio_ensamblajes> <nombre_corrida>
+bash scripts/05_assembly_qc/assembly_qc.sh <directorio_ensamblajes> <nombre_corrida>
 ```
 
 El primer argumento corresponde al directorio donde se encuentran los archivos FASTA de los ensamblajes. El segundo argumento define el nombre de la corrida y se utiliza para organizar los resultados.
@@ -363,25 +357,25 @@ El primer argumento corresponde al directorio donde se encuentran los archivos F
 
 ```bash
 chmod +x scripts/06_assembly_qc/assembly_qc.sh
-bash scripts/06_assembly_qc/assembly_qc.sh results/assembly/flye/raw raw
+bash scripts/05_assembly_qc/assembly_qc.sh results/assembly/flye/raw raw
 ```
 
 ### Ensamblajes a partir de lecturas filtradas
 
 ```bash
-bash scripts/06_assembly_qc/assembly_qc.sh results/assembly/flye/filtered filtered
+bash scripts/05_assembly_qc/assembly_qc.sh results/assembly/flye/filtered filtered
 ```
 
 ### Ensamblajes pulidos con Medaka a partir de lecturas crudas
 
 ```bash
-bash scripts/06_assembly_qc/assembly_qc.sh results/polishing/medaka/raw medaka_raw
+bash scripts/05_assembly_qc/assembly_qc.sh results/polishing/medaka/raw medaka_raw
 ```
 
 ### Ensamblajes pulidos con Medaka a partir de lecturas filtradas
 
 ```bash
-bash scripts/06_assembly_qc/assembly_qc.sh results/polishing/medaka/filtered medaka_filtered
+bash scripts/05_assembly_qc/assembly_qc.sh results/polishing/medaka/filtered medaka_filtered
 ```
 
 ## Parámetros principales
@@ -389,13 +383,10 @@ bash scripts/06_assembly_qc/assembly_qc.sh results/polishing/medaka/filtered med
 En el script se utilizan los siguientes parámetros:
 
 ```bash
-THREADS=32
 MODE="genome"
 LINEAGE="pseudomonas_odb12"
 REFERENCE="data/controles/PA14.fasta"
 ```
-
-`THREADS=32` define el número de hilos utilizados por `QUAST` y `BUSCO`. Puede ajustarse según los recursos disponibles del servidor.
 
 `MODE="genome"` indica que `BUSCO` evaluará ensamblajes genómicos.
 
@@ -410,9 +401,7 @@ Revisar los resultados generados en:
 ```bash
 ls results/assembly_qc/quast/
 ls results/assembly_qc/busco/
-ls logs/assembly_qc/
 ```
-
 
 # 07. Taxonomía
 
