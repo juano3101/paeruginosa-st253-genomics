@@ -138,7 +138,7 @@ Se eligió que se retengan únicamente lecturas con una longitud mínima de 1000
 --min_mean_q 10
 ```
 
-# 03.Control de calidad de lecturas filtradas
+## 02.1. Control de calidad de lecturas filtradas
 
 Después del filtrado, se realizó nuevamente el control de calidad de las lecturas Nanopore para evaluar los cambios en la calidad promedio, longitud de lectura, contenido GC y distribución de las secuencias retenidas.
 
@@ -148,13 +148,13 @@ Este paso utiliza el mismo ambiente Conda creado para el control de calidad de l
 conda activate qc_env
 ```
 
-## Ejecutar control de calidad
+### Ejecutar control de calidad
 
 ```bash
 bash scripts/01_qc/qc_reads.sh data/filt filt
 ```
 
-# 04. Ensamblaje con Flye
+# 03. Ensamblaje con Flye
 
 El ensamblaje de novo de los genomas se realizó utilizando `Flye`, un ensamblador optimizado para lecturas largas Nanopore.
 
@@ -194,7 +194,7 @@ bash scripts/03_assembly/flye_assembly.sh data/seq raw
 bash scripts/03_assembly/flye_assembly.sh data/filt filtered
 ```
 
-# 05 Pulido con Medaka
+# 04. Pulido con Medaka
 
 Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` para corregir errores asociados a la secuenciación Nanopore y mejorar la precisión de consenso de los ensamblajes.
 
@@ -267,7 +267,7 @@ MODEL="r1041_e82_400bps_sup_v5.2.0"
 `MODEL` corresponde al modelo de consenso utilizado para lecturas Oxford Nanopore R10.4.1 SUP.
 
 
-# 06. Control de calidad de ensamblajes
+# 05. Control de calidad de ensamblajes
 
 La calidad de los ensamblajes fue evaluada utilizando `QUAST` y `BUSCO`. `QUAST` permitió obtener métricas estructurales del ensamblaje, como tamaño total, número de contigs, N50, contenido GC y comparación contra una referencia. `BUSCO` permitió estimar la completitud génica de cada ensamblaje utilizando el linaje `pseudomonas_odb12`.
 
@@ -343,7 +343,7 @@ REFERENCE="data/controles/PA14.fasta"
 
 `REFERENCE="data/controles/PA14.fasta"` indica el genoma de referencia utilizado por `QUAST` para la comparación estructural de los ensamblajes.
 
-# 07. Taxonomía
+# 06. Taxonomía
 
 A partir de aquí se utilizan solo los ensamblados despúes de filtrar y pulir con Medaka
 
@@ -397,8 +397,8 @@ ls databases/kraken2/standard_08gb/
 El script `kraken2_taxonomy.sh` permite clasificar ensamblajes pulidos y controles de referencia.
 
 ```bash id="ly3k1y"
-chmod +x scripts/07_taxonomy/kraken2_taxonomy.sh
-bash scripts/07_taxonomy/kraken2_taxonomy.sh
+chmod +x scripts/06_taxonomy/kraken2_taxonomy.sh
+bash scripts/06_taxonomy/kraken2_taxonomy.sh
 ```
 
 Por defecto, el script utiliza:
@@ -428,20 +428,20 @@ Durante la clasificación se emplearon además los siguientes parámetros de Kra
 `--output` genera el detalle completo de clasificación para cada secuencia analizada.
 
 
-# 08. Preparación del dataset final
+## 06.1. Preparación del dataset final
 
 Con el objetivo de garantizar que los análisis posteriores se realizaran únicamente sobre ensamblajes de alta calidad, se generó un conjunto final de genomas a partir de los ensamblajes pulidos con Medaka obtenidos desde lecturas filtradas.
 
 Durante esta etapa se recopilaron los ensamblajes finales de todas las muestras y se consolidaron en un único directorio para facilitar los análisis posteriores de tipificación molecular, filogenómica y caracterización del resistoma. Adicionalmente, se excluyó el aislado `Rectal_P11__SRR26135179`, debido a que la clasificación taxonómica mediante Kraken2 evidenció contaminación polimicrobiana, con una proporción importante de secuencias asignadas a otros taxones distintos de *Pseudomonas aeruginosa*.
 
-## Ejecutar preparación del dataset final
+### Ejecutar preparación del dataset final
 
 ```bash
-chmod +x scripts/08_final_dataset/final_dataset.sh
-bash scripts/08_final_dataset/final_dataset.sh
+chmod +x scripts/06_taxonomy/final_dataset.sh
+bash scripts/06_taxonomy/final_dataset.sh
 ```
 
-## Criterios de inclusión
+### Criterios de inclusión
 
 Se incluyeron únicamente ensamblajes que cumplieron los siguientes criterios:
 
@@ -450,7 +450,7 @@ Se incluyeron únicamente ensamblajes que cumplieron los siguientes criterios:
 * Confirmación taxonómica compatible con *Pseudomonas aeruginosa*.
 * Ausencia de evidencia significativa de contaminación taxonómica.
 
-## Criterios de exclusión
+### Criterios de exclusión
 
 Se excluyó el ensamblaje correspondiente a:
 
@@ -460,7 +460,7 @@ Rectal_P11__SRR26135179
 
 debido a la detección de contaminación polimicrobiana durante la evaluación taxonómica.
 
-## Resultados
+### Resultados
 
 Los ensamblajes finales utilizados en los análisis posteriores se almacenan en:
 
@@ -474,11 +474,61 @@ Para verificar los genomas incluidos en el dataset final:
 ls data/final_fastas/
 ```
 
-# 09 Anotación con Prokka
+# 07. Tipificación MLST
+
+La tipificación multilocus de secuencias (MLST, Multi-Locus Sequence Typing) se realizó con el objetivo de confirmar el sequence type (ST) de cada aislado y verificar su pertenencia al linaje ST-253 previamente reportado para los genomas analizados.
+
+## Instalar MLST
+
+El repositorio oficial puede consultarse en:
+
+* [MLST GitHub Repository](https://github.com/tseemann/mlst)
+
+Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
+
+```bash
+conda create -n mlst_env -c bioconda -c conda-forge mlst -y
+conda activate mlst_env
+```
+
+Verificar instalación:
+
+```bash
+mlst --version
+```
+
+## Ejecutar tipificación MLST
+
+El script `mlst_typing.sh` realiza la identificación automática del sequence type para todos los ensamblajes incluidos en el conjunto final de datos.
+
+```bash
+chmod +x scripts/07_mlst/mlst_typing.sh
+bash scripts/07_mlst/mlst_typing.sh
+```
+
+## Parámetros utilizados
+
+La tipificación se realizó utilizando los esquemas MLST disponibles en PubMLST incluidos en la base de datos de la herramienta.
+
+## Resultados
+
+Los resultados generados se almacenan en:
+
+```bash
+results/mlst/
+```
+# 08. Filogenia
+
+
+# 09. Anotación genómica
+
+## 09.1. Con Prokka
+
+
 
 La anotación genómica inicial fue realizada utilizando `Prokka`.
 
-## Instalar Prokka
+### Instalar Prokka
 
 El repositorio oficial puede consultarse en:
 
@@ -497,18 +547,18 @@ which prokka
 prokka --version
 ```
 
-## Ejecutar anotación
+### Ejecutar anotación
 
 ```bash id="wkpv6g"
 chmod +x scripts/03_assembly/prokka_annotation.sh
 bash scripts/03_assembly/prokka_annotation.sh
 ```
 
-# 09.2 Anotación con Bakta
+## 09.2. Anotación con Bakta
 
 La anotación genómica complementaria fue realizada utilizando `Bakta`, una herramienta para la anotación rápida y estandarizada de genomas bacterianos.
 
-## Instalar Bakta
+### Instalar Bakta
 
 El repositorio oficial puede consultarse en:
 
@@ -528,7 +578,7 @@ which bakta
 bakta --version
 ```
 
-## Descargar base de datos de Bakta
+### Descargar base de datos de Bakta
 
 Antes de ejecutar la anotación, se debe descargar y configurar la base de datos de Bakta.
 
@@ -543,17 +593,9 @@ Verificar la base de datos:
 ls databases/bakta/
 ```
 
-## Ejecutar anotación
+### Ejecutar anotación
 
 ```bash
 chmod +x scripts/03_assembly/bakta_annotation.sh
 bash scripts/03_assembly/bakta_annotation.sh
-```
-
-## Resultados
-
-Revisar las anotaciones generadas en:
-
-```bash
-ls results/bakta/
 ```
