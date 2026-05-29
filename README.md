@@ -56,12 +56,6 @@ chmod +x scripts/00_download/download_data.sh
 bash scripts/00_download/download_data.sh
 ```
 
-Verificar los archivos FASTQ descargados:
-
-```bash
-ls data/raw_fastq/
-ls data/controles/
-```
 # 01. Control de calidad de lecturas crudas
 
 El control de calidad inicial de las lecturas Nanopore se realizó utilizando `FastQC`, `NanoPlot` y `MultiQC`, con el objetivo de evaluar métricas como distribución de longitudes, calidad Phred, contenido GC y resumen global de calidad antes del filtrado de lecturas.
@@ -74,7 +68,6 @@ Las herramientas utilizadas pueden consultarse en sus repositorios oficiales:
 * [NanoPlot GitHub Repository](https://github.com/wdecoster/nanoplot) (v1.46.2)
 * [MultiQC GitHub Repository](https://github.com/multiqc/multiqc) (v1.35)
 
-
 Se recomienda instalar todas las herramientas dentro de un mismo ambiente Conda.
 
 ```bash
@@ -84,7 +77,7 @@ conda activate qc_env
 pip install NanoPlot
 conda install -c bioconda -c conda-forge fastqc -y
 conda install -c bioconda -c conda-forge multiqc -y
-````
+```
 
 Verificar instalación:
 
@@ -105,13 +98,6 @@ chmod +x scripts/01_qc/qc_reads.sh
 bash scripts/01_qc/qc_reads.sh data/seq raw
 ```
 
-## Resultados
-Revisar Los resultados en:
-
-```bash
-ls results/qc/raw/
-```
-
 # 02. Filtrado de lecturas
 
 El filtrado de lecturas Nanopore se realizó utilizando `Filtlong`, con el objetivo de eliminar lecturas cortas y de baja calidad antes del ensamblaje genómico. Se aplicaron filtros mínimos de longitud y calidad promedio Phred para mejorar la calidad global de las lecturas utilizadas en los análisis posteriores.
@@ -122,7 +108,7 @@ El repositorio oficial de `Filtlong` puede consultarse en:
 
 * [Filtlong GitHub Repository](https://github.com/rrwick/filtlong) (v0.3.1)
 
-Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
+Instalar la herramienta dentro de un ambiente independiente.
 
 ```bash id="5m9t3v"
 conda create -n filtlong_env -c bioconda -c conda-forge filtlong -y
@@ -132,7 +118,6 @@ Verificar instalación:
 
 ```bash id="8hgc6m"
 which filtlong
-filtlong --help | head
 ```
 
 ## Ejecutar filtrado
@@ -153,13 +138,6 @@ Se eligió que se retengan únicamente lecturas con una longitud mínima de 1000
 --min_mean_q 10
 ```
 
-## Resultados
-Revisar las lecturas filtradas generadas en:
-
-```bash
-ls data/filt/
-```
-
 # 03.Control de calidad de lecturas filtradas
 
 Después del filtrado, se realizó nuevamente el control de calidad de las lecturas Nanopore para evaluar los cambios en la calidad promedio, longitud de lectura, contenido GC y distribución de las secuencias retenidas.
@@ -174,14 +152,6 @@ conda activate qc_env
 
 ```bash
 bash scripts/01_qc/qc_reads.sh data/filt filt
-```
-
-## Resultados
-
-Revisar los resultados generados en:
-
-```bash
-ls results/qc/filt/
 ```
 
 # 04. Ensamblaje con Flye
@@ -205,7 +175,6 @@ Verificar instalación:
 
 ```bash
 which flye
-flye --version
 ```
 
 ## Ejecutar ensamblaje
@@ -225,15 +194,6 @@ bash scripts/03_assembly/flye_assembly.sh data/seq raw
 bash scripts/03_assembly/flye_assembly.sh data/filt filtered
 ```
 
-## Resultados
-
-Revisar los ensamblajes generados en:
-
-```bash
-ls results/assembly/
-```
-
-
 # 05 Pulido con Medaka
 
 Después del ensamblaje inicial, los genomas fueron pulidos utilizando `Medaka` para corregir errores asociados a la secuenciación Nanopore y mejorar la precisión de consenso de los ensamblajes.
@@ -244,7 +204,7 @@ El repositorio oficial puede consultarse en:
 
 * [Medaka GitHub Repository](https://github.com/nanoporetech/medaka) (v2.2.2)
 
-En este proyecto se utilizó `Medaka v2.2.2` instalado mediante `pip` dentro de un ambiente Conda independiente. Esta estrategia permitió evitar problemas de compatibilidad con `GLIBC` observados al instalar directamente desde Conda en Ubuntu 20.04.
+En este proyecto se utilizó `Medaka v2.2.2` instalado mediante `pip` dentro de un ambiente Conda independiente. Esta estrategia permitió evitar problemas de compatibilidad con `Ubuntu 20.04` observados al instalar directamente desde Conda.
 
 ```bash
 conda create -n medaka_env python=3.11 -y
@@ -260,7 +220,6 @@ Verificar instalación:
 
 ```bash
 which medaka_consensus
-medaka_consensus --version
 which minimap2
 which samtools
 which bcftools
@@ -272,7 +231,7 @@ which tabix
 
 ### Prueba de funcionamiento
 
-Debido al elevado número de dependencias requeridas por Medaka (`samtools`, `minimap2`, `bcftools`, `bgzip`, `tabix`, `pyabpoa` y bibliotecas de Python), se recomienda ejecutar inicialmente el pulido sobre una única muestra para verificar que la instalación y todas las dependencias funcionan correctamente antes de procesar el conjunto completo de datos.
+Debido al número de dependencias requeridas por Medaka (`samtools`, `minimap2`, `bcftools`, `bgzip`, `tabix`, `pyabpoa` y bibliotecas de Python), se recomienda ejecutar inicialmente el pulido sobre una única muestra para verificar que la instalación y todas las dependencias funcionan correctamente antes de procesar el conjunto completo de datos.
 
 El siguiente comando permite ejecutar Medaka sobre una muestra individual:
 
@@ -298,7 +257,6 @@ bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/raw data/seq ra
 ```bash
 bash scripts/04_polish/medaka_polishing.sh results/assembly/flye/filtered data/filt filtered
 ```
-
 ## Parámetros utilizados
 
 El pulido con `Medaka` fue realizado utilizando los siguientes parámetros principales:
@@ -307,15 +265,6 @@ El pulido con `Medaka` fue realizado utilizando los siguientes parámetros princ
 MODEL="r1041_e82_400bps_sup_v5.2.0"
 ```
 `MODEL` corresponde al modelo de consenso utilizado para lecturas Oxford Nanopore R10.4.1 SUP.
-
-## Resultados
-
-Los ensamblajes pulidos se generan en:
-
-```bash
-ls results/polishing/medaka/raw
-ls results/polishing/medaka/filtered
-```
 
 
 # 06. Control de calidad de ensamblajes
@@ -394,20 +343,9 @@ REFERENCE="data/controles/PA14.fasta"
 
 `REFERENCE="data/controles/PA14.fasta"` indica el genoma de referencia utilizado por `QUAST` para la comparación estructural de los ensamblajes.
 
-## Resultados
-
-Revisar los resultados generados en:
-
-```bash
-ls results/assembly_qc/quast/
-ls results/assembly_qc/busco/
-```
-
 # 07. Taxonomía
 
 A partir de aquí se utilizan solo los ensamblados despúes de filtrar y pulir con Medaka
-
-# 07.1 Clasificación taxonómica
 
 La clasificación taxonómica de ensamblajes y controles se realizó utilizando `Kraken2`, con el objetivo de verificar la identidad taxonómica de los ensamblajes generados y detectar posibles eventos de contaminación o mezclas taxonómicas.
 
@@ -487,23 +425,58 @@ Durante la clasificación se emplearon además los siguientes parámetros de Kra
 
 `--output` genera el detalle completo de clasificación para cada secuencia analizada.
 
-## Resultados
 
-Revisar los resultados generados en:
+# 08. Preparación del dataset final
 
-```bash id="ctvpxf"
-ls results/taxonomy/kraken2/
+Con el objetivo de garantizar que los análisis posteriores se realizaran únicamente sobre ensamblajes de alta calidad, se generó un conjunto final de genomas a partir de los ensamblajes pulidos con Medaka obtenidos desde lecturas filtradas.
+
+Durante esta etapa se recopilaron los ensamblajes finales de todas las muestras y se consolidaron en un único directorio para facilitar los análisis posteriores de tipificación molecular, filogenómica y caracterización del resistoma. Adicionalmente, se excluyó el aislado `Rectal_P11__SRR26135179`, debido a que la clasificación taxonómica mediante Kraken2 evidenció contaminación polimicrobiana, con una proporción importante de secuencias asignadas a otros taxones distintos de *Pseudomonas aeruginosa*.
+
+## Ejecutar preparación del dataset final
+
+```bash
+chmod +x scripts/08_final_dataset/final_dataset.sh
+bash scripts/08_final_dataset/final_dataset.sh
 ```
 
+## Criterios de inclusión
 
-# 09 Anotación
+Se incluyeron únicamente ensamblajes que cumplieron los siguientes criterios:
 
+* Ensamblajes obtenidos a partir de lecturas filtradas.
+* Ensamblajes pulidos mediante Medaka.
+* Confirmación taxonómica compatible con *Pseudomonas aeruginosa*.
+* Ausencia de evidencia significativa de contaminación taxonómica.
 
-## 09.1 Anotación con Prokka
+## Criterios de exclusión
+
+Se excluyó el ensamblaje correspondiente a:
+
+```text
+Rectal_P11__SRR26135179
+```
+
+debido a la detección de contaminación polimicrobiana durante la evaluación taxonómica.
+
+## Resultados
+
+Los ensamblajes finales utilizados en los análisis posteriores se almacenan en:
+
+```bash
+data/final_fastas/
+```
+
+Para verificar los genomas incluidos en el dataset final:
+
+```bash
+ls data/final_fastas/
+```
+
+# 09 Anotación con Prokka
 
 La anotación genómica inicial fue realizada utilizando `Prokka`.
 
-### Instalar Prokka
+## Instalar Prokka
 
 El repositorio oficial puede consultarse en:
 
@@ -515,7 +488,6 @@ Se recomienda instalar `Prokka` dentro de un ambiente Conda independiente.
 conda create -n prokka_env -c bioconda -c conda-forge prokka -y
 conda activate prokka_env
 ```
-
 Verificar instalación:
 
 ```bash id="7vk0ov"
@@ -523,26 +495,18 @@ which prokka
 prokka --version
 ```
 
-### Ejecutar anotación
+## Ejecutar anotación
 
 ```bash id="wkpv6g"
 chmod +x scripts/03_assembly/prokka_annotation.sh
 bash scripts/03_assembly/prokka_annotation.sh
 ```
 
-### Resultados
-
-Revisar las anotaciones generadas en:
-
-```bash id="k8rdsh"
-ls results/prokka/
-```
-
-## 09.2 Anotación con Bakta
+# 09.2 Anotación con Bakta
 
 La anotación genómica complementaria fue realizada utilizando `Bakta`, una herramienta para la anotación rápida y estandarizada de genomas bacterianos.
 
-### Instalar Bakta
+## Instalar Bakta
 
 El repositorio oficial puede consultarse en:
 
@@ -562,7 +526,7 @@ which bakta
 bakta --version
 ```
 
-### Descargar base de datos de Bakta
+## Descargar base de datos de Bakta
 
 Antes de ejecutar la anotación, se debe descargar y configurar la base de datos de Bakta.
 
@@ -577,14 +541,14 @@ Verificar la base de datos:
 ls databases/bakta/
 ```
 
-### Ejecutar anotación
+## Ejecutar anotación
 
 ```bash
 chmod +x scripts/03_assembly/bakta_annotation.sh
 bash scripts/03_assembly/bakta_annotation.sh
 ```
 
-### Resultados
+## Resultados
 
 Revisar las anotaciones generadas en:
 
