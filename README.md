@@ -517,11 +517,18 @@ results/mlst/
 ```
 # 08. Filogenia
 
-# 08. Filogenia
-
 El análisis filogenómico se realizó a partir de SNPs del core genome utilizando `Snippy`, `SNP-sites`, `IQ-TREE` y `snp-dists`. Este flujo permitió mapear los ensamblajes curados contra una referencia interna, construir un alineamiento de SNPs, inferir un árbol filogenético por máxima verosimilitud y calcular una matriz de distancias genéticas entre aislados.
 
 ## Instalar herramientas
+
+## Instalar herramientas
+
+Los repositorios oficiales pueden consultarse en:
+
+* [Snippy GitHub Repository](https://github.com/tseemann/snippy)
+* [SNP-sites GitHub Repository](https://github.com/sanger-pathogens/snp-sites)
+* [snp-dists GitHub Repository](https://github.com/tseemann/snp-dists)
+* [IQ-TREE Official Website](https://iqtree.github.io/)
 
 Las herramientas principales pueden instalarse en un ambiente Conda independiente.
 
