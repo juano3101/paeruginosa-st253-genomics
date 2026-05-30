@@ -661,8 +661,8 @@ prokka --version
 ### Ejecutar anotación
 
 ```bash id="wkpv6g"
-chmod +x scripts/03_assembly/prokka_annotation.sh
-bash scripts/03_assembly/prokka_annotation.sh
+chmod +x scripts/09_annotation/prokka_annotation.sh
+bash scripts/09_annotation/prokka_annotation.sh
 ```
 
 ## 09.2. Anotación con Bakta
@@ -673,7 +673,7 @@ La anotación genómica complementaria fue realizada utilizando `Bakta`, una her
 
 El repositorio oficial puede consultarse en:
 
-* [Bakta GitHub Repository](https://github.com/oschwengers/bakta)
+* [Bakta GitHub Repository](https://github.com/oschwengers/bakta) (v1.12)
 
 Se recomienda instalar `Bakta` dentro de un ambiente Conda independiente.
 
@@ -707,6 +707,87 @@ ls databases/bakta/
 ### Ejecutar anotación
 
 ```bash
-chmod +x scripts/03_assembly/bakta_annotation.sh
-bash scripts/03_assembly/bakta_annotation.sh
+chmod +x scripts/09_annotation/bakta_annotation.sh
+bash scripts/09_annotation/bakta_annotation.sh
 ```
+
+## 09.3. AMRFinderPlus
+
+La identificación de genes y mutaciones asociadas a resistencia antimicrobiana se realizó utilizando `AMRFinderPlus`, a partir de las anotaciones estructurales generadas previamente con `Bakta`. Este análisis permitió detectar genes AMR adquiridos y mutaciones cromosómicas asociadas a resistencia en los aislados de *Pseudomonas aeruginosa*.
+
+## Instalar AMRFinderPlus
+
+El repositorio oficial puede consultarse en:
+
+* [AMRFinderPlus GitHub Repository](https://github.com/ncbi/amr) (v4.2.7)
+
+Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
+
+```bash
+conda create -n amrfinder_env -c bioconda -c conda-forge ncbi-amrfinderplus -y
+conda activate amrfinder_env
+```
+
+Verificar instalación:
+
+```bash
+amrfinder --version
+```
+
+## Ejecutar detección de genes AMR
+
+El script `amrfinder_annotation.sh` ejecuta automáticamente AMRFinderPlus sobre las anotaciones generadas por Bakta.
+
+```bash
+chmod +x scripts/09_annotation/amrfinder_annotation.sh
+bash scripts/09_annotation/amrfinder_annotation.sh
+```
+
+Por defecto, el script utiliza:
+
+```bash
+results/annotation/bakta
+```
+
+como directorio de entrada.
+
+También puede ejecutarse indicando manualmente el directorio de entrada:
+
+```bash
+bash scripts/09_annotation/amrfinder_annotation.sh results/annotation/bakta
+```
+
+## Parámetros utilizados
+
+En el script se utilizaron los siguientes parámetros principales:
+
+```bash
+ORGANISM="Pseudomonas_aeruginosa"
+ANNOTATION_FORMAT="bakta"
+```
+
+`ORGANISM="Pseudomonas_aeruginosa"` especifica el organismo analizado.
+
+`ANNOTATION_FORMAT="bakta"` indica el formato de anotación utilizado como entrada.
+
+Durante la ejecución se emplearon además los siguientes parámetros de AMRFinderPlus:
+
+```bash
+--plus
+-p
+-n
+-g
+--annotation_format
+```
+
+`--plus` habilita la búsqueda ampliada de genes y mutaciones asociadas a resistencia antimicrobiana.
+
+`-p` especifica el archivo de proteínas (`.faa`).
+
+`-n` especifica el archivo de secuencias nucleotídicas (`.fna`).
+
+`-g` especifica el archivo de anotación (`.gff3`).
+
+`--annotation_format` indica el formato de anotación utilizado.
+
+Cada muestra produce un archivo tabulado (`.tsv`) con los genes y mutaciones detectados.
