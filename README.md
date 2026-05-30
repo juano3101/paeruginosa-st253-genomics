@@ -63,6 +63,21 @@ Con el ambiente `sra_tools` activado, ejecutar:
 chmod +x scripts/00_download/download_data.sh
 bash scripts/00_download/download_data.sh
 ```
+## Resultados
+
+Los archivos descargados se almacenan en:
+
+```bash
+data/seq/
+data/controles/
+```
+Los archivos principales generados son:
+```bash
+data/seq/*.fastq # 12 archivos .fastq
+data/controles/PA14.fasta
+data/controles/PAO1.fasta
+data/controles/Ecoli_K12.fasta
+```
 
 # 01. Control de calidad de lecturas crudas
 
@@ -99,11 +114,18 @@ which multiqc
 
 El script `qc_reads.sh` permite ejecutar el análisis de calidad tanto para lecturas crudas como filtradas.
 
-### Lecturas crudas
+Para las lecturas crudas usar el siguien código:
 
 ```bash
 chmod +x scripts/01_qc/qc_reads.sh
 bash scripts/01_qc/qc_reads.sh data/seq raw
+```
+## Resultados
+
+Los resultados del control de calidad se generan en:
+
+```bash
+results/qc/raw/
 ```
 
 # 02. Filtrado de lecturas
@@ -118,13 +140,13 @@ El repositorio oficial de `Filtlong` puede consultarse en:
 
 Instalar la herramienta dentro de un ambiente independiente.
 
-```bash id="5m9t3v"
+```bash
 conda create -n filtlong_env -c bioconda -c conda-forge filtlong -y
 conda activate filtlong_env
 ```
 Verificar instalación:
 
-```bash id="8hgc6m"
+```bash
 which filtlong
 ```
 
@@ -146,6 +168,20 @@ Se eligió que se retengan únicamente lecturas con una longitud mínima de 1000
 --min_mean_q 10
 ```
 
+## Resultados
+
+Las lecturas filtradas se generan en:
+
+```bash
+data/filt/
+```
+
+Los archivos principales generados son:
+
+```bash
+data/filt/*.fastq
+```
+
 ## 02.1. Control de calidad de lecturas filtradas
 
 Después del filtrado, se realizó nuevamente el control de calidad de las lecturas Nanopore para evaluar los cambios en la calidad promedio, longitud de lectura, contenido GC y distribución de las secuencias retenidas.
@@ -160,6 +196,14 @@ conda activate qc_env
 
 ```bash
 bash scripts/01_qc/qc_reads.sh data/filt filt
+```
+
+## Resultados
+
+Los resultados del control de calidad se generan en:
+
+```bash
+results/qc/filtered/
 ```
 
 # 03. Ensamblaje con Flye
@@ -200,6 +244,23 @@ bash scripts/03_assembly/flye_assembly.sh data/seq raw
 
 ```bash
 bash scripts/03_assembly/flye_assembly.sh data/filt filtered
+```
+
+## Resultados
+
+Los ensamblajes generados se almacenan en:
+
+```bash
+results/assembly/flye/
+logs/assembly/
+```
+
+Los archivos principales generados son:
+
+```bash
+results/assembly/flye/raw/*/*.fasta
+results/assembly/flye/filtered/*/*.fasta
+results/assembly/flye/*/*_assembly_info.txt
 ```
 
 # 04. Pulido con Medaka
@@ -274,6 +335,21 @@ MODEL="r1041_e82_400bps_sup_v5.2.0"
 ```
 `MODEL` corresponde al modelo de consenso utilizado para lecturas Oxford Nanopore R10.4.1 SUP.
 
+## Resultados
+
+Los ensamblajes pulidos se generan en:
+
+```bash
+results/polishing/medaka/
+logs/polishing/
+```
+
+Los archivos principales generados son:
+
+```bash
+results/polishing/medaka/raw/*/*.fasta
+results/polishing/medaka/filtered/*/*.fasta
+```
 
 # 05. Control de calidad de ensamblajes
 
@@ -350,6 +426,15 @@ REFERENCE="data/controles/PA14.fasta"
 `LINEAGE="pseudomonas_odb12"` especifica el conjunto de genes conservados utilizado por `BUSCO`, correspondiente al linaje de *Pseudomonas*.
 
 `REFERENCE="data/controles/PA14.fasta"` indica el genoma de referencia utilizado por `QUAST` para la comparación estructural de los ensamblajes.
+
+## Resultados
+
+Los resultados de evaluación se generan en:
+
+```bash
+results/qc_assembly/
+logs/qc_assembly/
+```
 
 # 06. Taxonomía
 
@@ -432,7 +517,14 @@ Durante la clasificación se emplearon además los siguientes parámetros de Kra
 `--report` genera un resumen tabular de abundancia taxonómica.
 
 `--output` genera el detalle completo de clasificación para cada secuencia analizada.
+## Resultados
 
+Los resultados de clasificación taxonómica se generan en:
+
+```bash
+results/taxonomy/kraken2/
+logs/taxonomy/kraken2/
+```
 
 ## 06.1. Preparación del dataset final
 
@@ -458,15 +550,7 @@ Se incluyeron únicamente ensamblajes que cumplieron los siguientes criterios:
 
 ### Criterios de exclusión
 
-Se excluyó el ensamblaje correspondiente a:
-
-```text
-Rectal_P11__SRR26135179
-```
-
-debido a la detección de contaminación polimicrobiana durante la evaluación taxonómica.
-
-### Resultados
+Se excluyó el ensamblaje correspondiente a Rectal_P11__SRR26135179 debido a la detección de contaminación polimicrobiana durante la evaluación taxonómica.
 
 Los ensamblajes finales utilizados en los análisis posteriores se almacenan en:
 
@@ -518,11 +602,13 @@ La tipificación se realizó utilizando los esquemas MLST disponibles en PubMLST
 
 ## Resultados
 
-Los resultados generados se almacenan en:
+Los resultados de tipificación se generan en:
 
 ```bash
 results/mlst/
+logs/mlst/
 ```
+
 # 08. Filogenia
 
 El análisis filogenómico se realizó a partir de SNPs del core genome utilizando `Snippy`, `SNP-sites`, `IQ-TREE` y `snp-dists`. Este flujo permitió mapear los ensamblajes curados contra una referencia interna, construir un alineamiento de SNPs, inferir un árbol filogenético por máxima verosimilitud y calcular una matriz de distancias genéticas entre aislados.
@@ -546,7 +632,6 @@ conda activate phylogeny_env
 conda install -c conda-forge -c bioconda snippy -y
 conda install -c bioconda iqtree -y
 ```
-
 Verificar instalación:
 
 ```bash
@@ -558,7 +643,6 @@ which iqtree3
 snippy --version
 iqtree3 --version
 ```
-
 ## Ejecutar análisis filogenómico
 
 El script `snippy_iqtree.sh` ejecuta el análisis filogenómico completo usando como entrada los ensamblajes finales curados, la referencia interna `PA14` y el outgroup `PAO1`.
@@ -567,7 +651,6 @@ El script `snippy_iqtree.sh` ejecuta el análisis filogenómico completo usando 
 chmod +x scripts/08_phylogeny/snippy_iqtree.sh
 bash scripts/08_phylogeny/snippy_iqtree.sh
 ```
-
 Por defecto, el script utiliza:
 
 ```bash
@@ -575,7 +658,6 @@ data/final_fastas
 data/controles/PA14.fasta
 data/controles/PAO1.fasta
 ```
-
 También puede ejecutarse especificando manualmente las rutas de entrada:
 
 ```bash
@@ -626,7 +708,6 @@ Los resultados del análisis filogenómico se generan en:
 results/phylogeny/snippy_iqtree/
 logs/phylogeny/
 ```
-
 Los archivos principales generados son:
 
 ```bash
@@ -637,13 +718,9 @@ results/phylogeny/snippy_iqtree/core.snp.aln.iqtree
 results/phylogeny/snippy_iqtree/core.snp.aln.log
 results/phylogeny/snippy_iqtree/snippy_distancias.tsv
 ```
-
-
 # 09. Anotación genómica
 
 ## 09.1. Con Prokka
-
-
 
 La anotación genómica inicial fue realizada utilizando `Prokka`.
 
@@ -672,6 +749,14 @@ prokka --version
 chmod +x scripts/09_annotation/prokka_annotation.sh
 bash scripts/09_annotation/prokka_annotation.sh
 ```
+## Resultados
+
+Los resultados de anotación se generan en:
+
+```bash
+results/annotation/prokka/
+logs/annotation/prokka/
+```
 
 ## 09.2. Anotación con Bakta
 
@@ -696,7 +781,6 @@ Verificar instalación:
 which bakta
 bakta --version
 ```
-
 ### Descargar base de datos de Bakta
 
 Antes de ejecutar la anotación, se debe descargar y configurar la base de datos de Bakta.
@@ -711,12 +795,20 @@ Verificar la base de datos:
 ```bash
 ls databases/bakta/
 ```
-
 ### Ejecutar anotación
 
 ```bash
 chmod +x scripts/09_annotation/bakta_annotation.sh
 bash scripts/09_annotation/bakta_annotation.sh
+```
+
+## Resultados
+
+Los resultados de anotación se generan en:
+
+```bash
+results/annotation/bakta/
+logs/annotation/bakta/
 ```
 
 ## 09.3. AMRFinderPlus
@@ -799,3 +891,12 @@ Durante la ejecución se emplearon además los siguientes parámetros de AMRFind
 `--annotation_format` indica el formato de anotación utilizado.
 
 Cada muestra produce un archivo tabulado (`.tsv`) con los genes y mutaciones detectados.
+
+## Resultados
+
+Los resultados se generan en:
+
+```bash
+results/annotation/amrfinder/
+logs/annotation/amrfinder/
+```
