@@ -17,10 +17,18 @@ cd paeruginosa-st253-genomics
 - [00. Descargar secuencias](#00-descargar-secuencias)
 - [01. Control de calidad de lecturas crudas](#01-control-de-calidad-de-lecturas-crudas)
 - [02. Filtrado de lecturas](#02-filtrado-de-lecturas)
-- [03. Control de calidad de lecturas filtradas](#03-control-de-calidad-de-lecturas-filtradas)
-- [04. Ensamblaje con Flye](#04-ensamblaje-con-flye)
-- [05. Anotación genómica](#05-anotación-genómica)
-  - [05.1 Anotación con Prokka](#051-anotación-con-prokka)
+  - [02.1. Control de calidad de lecturas filtradas](#021-control-de-calidad-de-lecturas-filtradas)
+- [03. Ensamblaje con Flye](#03-ensamblaje-con-flye)
+- [04. Pulido con Medaka](#04-pulido-con-medaka)
+- [05. Control de calidad de ensamblajes](#05-control-de-calidad-de-ensamblajes)
+- [06. Taxonomía](#06-taxonomía)
+  - [06.1. Preparación del dataset final](#061-preparación-del-dataset-final)
+- [07. Tipificación MLST](#07-tipificación-mlst)
+- [08. Filogenia](#08-filogenia)
+- [09. Anotación genómica](#09-anotación-genómica)
+  - [09.1. Anotación con Prokka](#091-con-prokka)
+  - [09.2. Anotación con Bakta](#092-anotación-con-bakta)
+  - [09.3. AMRFinderPlus](#093-amrfinderplus)
 
 # 00. Descargar secuencias
 
