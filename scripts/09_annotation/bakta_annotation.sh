@@ -52,6 +52,7 @@ xargs -I {} -P "$PARALLEL_JOBS" bash -c '
   bakta \
     --db "$db" \
     --threads "$threads" \
+    --skip-sorf \
     --output "$outdir/$prefix" \
     --prefix "$prefix" \
     "$f" \
