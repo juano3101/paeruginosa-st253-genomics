@@ -610,9 +610,9 @@ El análisis filogenómico se realizó a partir de SNPs del core genome utilizan
 
 Los repositorios oficiales pueden consultarse en:
 
-* [Snippy GitHub Repository](https://github.com/tseemann/snippy)
-* [SNP-sites GitHub Repository](https://github.com/sanger-pathogens/snp-sites) 
-* [snp-dists GitHub Repository](https://github.com/tseemann/snp-dists) (v4.6.0)
+* [Snippy GitHub Repository](https://github.com/tseemann/snippy) (v4.6.0)
+* [SNP-sites GitHub Repository](https://github.com/sanger-pathogens/snp-sites) (v2.5.1)
+* [snp-dists GitHub Repository](https://github.com/tseemann/snp-dists) (v1.2.0)
 * [IQ-TREE Official Website](https://iqtree.github.io/) (v3.1.2)
 
 Las herramientas principales pueden instalarse en un ambiente Conda independiente.

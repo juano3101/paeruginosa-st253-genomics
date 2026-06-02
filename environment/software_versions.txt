@@ -14,10 +14,10 @@ QUAST: v5.3.0
 BUSCO: v6.0.0
 Kraken2: v2.17.1
 MLST: v2.33.1
-Snippy:
-SNP-sites:
-snp-dists:
-IQ-TREE:
+Snippy: v4.6.0
+SNP-sites: v2.5.1
+snp-dists: v1.2.0
+IQ-TREE: v3.1.2
 Prokka: v1.15.6 
 Bakta: v1.12
 AMRFinderPlus: v4.2.7
