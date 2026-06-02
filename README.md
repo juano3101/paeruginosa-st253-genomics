@@ -563,7 +563,7 @@ La tipificación multilocus de secuencias (MLST, Multi-Locus Sequence Typing) se
 
 El repositorio oficial puede consultarse en:
 
-* [MLST GitHub Repository](https://github.com/tseemann/mlst)
+* [MLST GitHub Repository](https://github.com/tseemann/mlst) (v2.33.1)
 
 Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
 
@@ -583,8 +583,8 @@ mlst --version
 El script `mlst_typing.sh` realiza la identificación automática del sequence type para todos los ensamblajes incluidos en el conjunto final de datos.
 
 ```bash
-chmod +x scripts/07_mlst/mlst_typing.sh
-bash scripts/07_mlst/mlst_typing.sh
+chmod +x scripts/07_typing/mlst_typing.sh
+bash scripts/07_typing/mlst_typing.sh
 ```
 
 ## Parámetros utilizados
@@ -611,9 +611,9 @@ El análisis filogenómico se realizó a partir de SNPs del core genome utilizan
 Los repositorios oficiales pueden consultarse en:
 
 * [Snippy GitHub Repository](https://github.com/tseemann/snippy)
-* [SNP-sites GitHub Repository](https://github.com/sanger-pathogens/snp-sites)
-* [snp-dists GitHub Repository](https://github.com/tseemann/snp-dists)
-* [IQ-TREE Official Website](https://iqtree.github.io/)
+* [SNP-sites GitHub Repository](https://github.com/sanger-pathogens/snp-sites) 
+* [snp-dists GitHub Repository](https://github.com/tseemann/snp-dists) (v4.6.0)
+* [IQ-TREE Official Website](https://iqtree.github.io/) (v3.1.2)
 
 Las herramientas principales pueden instalarse en un ambiente Conda independiente.
 
@@ -639,8 +639,8 @@ iqtree3 --version
 El script `snippy_iqtree.sh` ejecuta el análisis filogenómico completo usando como entrada los ensamblajes finales curados, la referencia interna `PA14` y el outgroup `PAO1`.
 
 ```bash
-chmod +x scripts/08_phylogeny/snippy_iqtree.sh
-bash scripts/08_phylogeny/snippy_iqtree.sh
+chmod +x scripts/08_phylogeny/snippy_iqtree_phylogeny.sh
+bash scripts/08_phylogeny/snippy_iqtree_phylogeny.sh
 ```
 Por defecto, el script utiliza:
 

@@ -12,8 +12,8 @@ Flye: v2.9.6
 Medaka: v2.2.2
 QUAST: v5.3.0
 BUSCO: v6.0.0
-Kraken2:v2.17.1
-MLST:
+Kraken2: v2.17.1
+MLST: v2.33.1
 Snippy:
 SNP-sites:
 snp-dists:
