@@ -983,11 +983,15 @@ Una vez descargado y descomprimido el archivo, los scripts de R pueden ejecutars
 
 Este repositorio contiene los scripts y archivos necesarios para reproducir las tablas, figuras y análisis presentados en el estudio genómico de aislados clínicos de *Pseudomonas aeruginosa* pertenecientes al linaje ST-253.
 
-Debido al costo computacional de las etapas de ensamblaje, pulido, anotación y análisis filogenómico, los análisis primarios fueron ejecutados previamente en un entorno de computación de alto rendimiento (HPC). Posteriormente, se exportó un conjunto mínimo de archivos procesados a la carpeta `work/`, la cual contiene toda la información necesaria para reproducir los resultados finales sin necesidad de volver a ejecutar el pipeline bioinformático completo.
+Debido al costo computacional de las etapas de ensamblaje, pulido, anotación y análisis filogenómico, los análisis primarios fueron ejecutados previamente en un entorno de computación de alto rendimiento (HPC). Posteriormente, se exportó un conjunto mínimo de archivos procesados a la carpeta [`work/`](work/), la cual contiene toda la información necesaria para reproducir los resultados finales sin necesidad de volver a ejecutar el pipeline bioinformático completo.
 
 Los datos exportados incluyen resultados de control de calidad de lecturas y ensamblajes, clasificación taxonómica, tipificación MLST, filogenia basada en SNPs, anotaciones genómicas y detección de genes de resistencia antimicrobiana.
 
-El documento `reporte_tablas_figuras.qmd` utiliza exclusivamente los archivos contenidos en la carpeta `work/` para generar de forma reproducible todas las tablas y figuras empleadas en el manuscrito. De esta manera, cualquier usuario puede reconstruir los resultados finales sin requerir acceso al servidor HPC ni a los archivos intermedios generados durante el procesamiento inicial.
+Los scripts utilizados para generar las tablas, figuras y análisis estadísticos se encuentran organizados en la carpeta [`scripts_R/`](scripts_R/).
+
+El documento reproducible [`reporte_tablas_figuras.qmd`](reporte_tablas_figuras.qmd) utiliza exclusivamente los archivos contenidos en la carpeta [`work/`](work/) para generar de forma automática todas las tablas y figuras empleadas en el manuscrito.
+
+De esta manera, cualquier usuario puede reconstruir los resultados finales sin requerir acceso al servidor HPC ni a los archivos intermedios generados durante el procesamiento inicial.
 
 La estructura general de la parte de visualización es la siguiente:
 
