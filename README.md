@@ -816,13 +816,19 @@ Se recomienda instalar la herramienta dentro de un ambiente Conda independiente.
 
 ```bash
 conda create -n amrfinder_env -c bioconda -c conda-forge ncbi-amrfinderplus -y
-conda activate amrfinder_env
+conda activate c
 ```
 
 Verificar instalación:
 
 ```bash
 amrfinder --version
+```
+
+## Descargar a base de datos
+
+```bash
+amrfinder -u
 ```
 
 ## Ejecutar detección de genes AMR
