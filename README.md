@@ -978,6 +978,3 @@ work.tar.gz
 La carpeta `work/` contiene todos los archivos necesarios para el análisis en R y Quarto, mientras que `work.tar.gz` corresponde a una versión comprimida lista para descargar o transferir a otro equipo.
 
 Una vez descargado y descomprimido el archivo, los scripts de R pueden ejecutarse directamente utilizando la estructura de directorios incluida en la carpeta exportada.
-
-
-HOLA A TRABAJAR
