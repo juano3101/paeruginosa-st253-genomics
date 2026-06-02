@@ -54,8 +54,8 @@ cp -v results/phylogeny/snippy_iqtree/core.snp.aln.contree "$OUT_DIR/phylogeny/"
 cp -v results/phylogeny/snippy_iqtree/core.snp.aln.ufboot "$OUT_DIR/phylogeny/"
 cp -v results/phylogeny/snippy_iqtree/core.tab "$OUT_DIR/phylogeny/"
 cp -v results/phylogeny/snippy_iqtree/core.txt "$OUT_DIR/phylogeny/"
-cp -v results/phylogeny/snippy_iqtree/core.snp.aln.treefile "$OUT_DIR/"
-cp -v results/phylogeny/snippy_iqtree/snippy_distancias.tsv "$OUT_DIR/"
+cp -v results/phylogeny/snippy_iqtree/core.snp.aln.treefile "$OUT_DIR/phylogeny/"
+cp -v results/phylogeny/snippy_iqtree/snippy_distancias.tsv "$OUT_DIR/phylogeny/"
 
 # annotation bakta
 mkdir -p "$OUT_DIR/annotation/bakta"
