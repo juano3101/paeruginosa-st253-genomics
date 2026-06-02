@@ -1,5 +1,5 @@
 ---
-title: "Tablas y gráficos generados"
+title: "Tablas y gráficos"
 author: "Juan Jácome"
 date: today
 lang: es
@@ -24,13 +24,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 ```{r 00_cargar_paquetes, include=FALSE, cache=FALSE}
 source("scripts_R/00_cargar_paquetes.R")
 ```
 
 Este documento presenta un análisis reproducible de los principales resultados obtenidos a partir de la caracterización genómica de aislados clínicos de *Pseudomonas aeruginosa* pertenecientes al linaje ST-253. Utilizando los datos procesados exportados desde el entorno de computación de alto rendimiento (HPC), se generaron nuevamente las tablas y figuras empleadas en el manuscrito, incluyendo los análisis de control de calidad de lecturas y ensamblajes, clasificación taxonómica, tipificación MLST, filogenia basada en SNPs y caracterización del resistoma. El objetivo de este documento es facilitar la reproducibilidad computacional de los resultados y proporcionar una representación integrada de los análisis realizados mediante un flujo de trabajo completamente reproducible en R y Quarto.
-
 
 # Descripción de las muestras
 
@@ -48,6 +46,7 @@ tabla_metadata_ft
 ```
 
 # Calidad de las secuencias
+
 ```{r 03_qc_reads.R}
 
 source("scripts_R/03_qc_reads.R")
@@ -71,6 +70,7 @@ tabla_qc_resultados_ft
 ```
 
 # Calidad de ensamblados
+
 ```{r 04_qc_assembly.R}
 source("scripts_R/04_qc_assembly.R")
 ```
@@ -90,6 +90,7 @@ tabla_ensamblaje_final_ft
 ```
 
 # Identificación taxonómica
+
 ```{r table_kraken}
 #| label: tbl-kraken
 #| tbl-cap: "Composición taxonómica de los ensamblajes bacterianos determinada mediante Kraken2."
@@ -99,6 +100,7 @@ tabla_resumen_especies_ft
 ```
 
 # Tipificación MLST
+
 ```{r 06_mlst}
 #| label: fig-mlst-medaka
 #| fig-cap: "Comparación del estado de los alelos MLST entre los ensamblajes sin pulido y los ensamblajes corregidos con Medaka. ND = No determinado, ST = Sequence Type"
@@ -112,6 +114,7 @@ p_st_final
 ```
 
 # Filogenia
+
 ```{r fig-filogenia-st253}
 #| label: fig-filogenia-st253
 #| fig-cap: "Árboles filogenómicos basados en SNPs del genoma core de aislados clínicos de Pseudomonas aeruginosa ST-253. El panel superior (A) muestra la relación filogenómica global incluyendo la referencia PA14 (ST-253) y el outgroup PAO1 (ST-549). El panel inferior (B) muestra la microevolución intra-linaje ST-253, resaltando los principales clados clínicos observados."
@@ -125,6 +128,7 @@ figura_phyl_1
 ```
 
 # Matriz de distancias basadas en SNPs
+
 ```{r fig-heatmap-snp}
 #| label: fig-heatmap-snp
 #| fig-cap: "Heatmap de distancias SNP entre los aislados clínicos de *Pseudomonas aeruginosa* ST-253. Los valores representan el número de SNPs observados entre pares de aislados a partir del alineamiento del *core genome*. El dendrograma refleja el agrupamiento jerárquico basado en las distancias genómicas."
@@ -139,6 +143,7 @@ grid::grid.draw(p_snp_final_completo)
 ```
 
 # Resistoma
+
 ```{r 09_resistoma}
 source("scripts_R/09_resistoma.R")
 ```
@@ -161,8 +166,8 @@ p_final_resist
 draw(p_heatmap_genes_detalle, merge_legend = TRUE)
 ```
 
-
 # Genotipo más Fenotipo
+
 ```{r fig-filogenia-resistoma}
 #| label: fig-filogenia-resistoma
 #| fig-cap: "Relación filogenética, perfil resistómico y fenotipo antimicrobiano de los aislados clínicos de *Pseudomonas aeruginosa* ST-253. El árbol filogenético basado en SNPs del core genome se muestra junto con información clínica y molecular de cada aislado, incluyendo sexo, tipo de muestra, paciente, genes y mutaciones asociados a resistencia antimicrobiana, así como el perfil fenotípico de susceptibilidad a antibióticos. Los colores representan genes AMR adquiridos, mutaciones puntuales, mutaciones disruptivas y categorías de resistencia fenotípica. Las barras superiores agrupan los genes y antibióticos según su mecanismo de resistencia y familia antimicrobiana, respectivamente. Abreviaturas de antibióticos: AMK = amikacina, GEN = gentamicina, CAZ = ceftazidima, FEP = cefepime, IPM = imipenem, MEM = meropenem, TZP = piperacilina/tazobactam, CIP = ciprofloxacina y LVX = levofloxacina."

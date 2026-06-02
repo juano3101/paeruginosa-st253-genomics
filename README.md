@@ -978,3 +978,22 @@ work.tar.gz
 La carpeta `work/` contiene todos los archivos necesarios para el análisis en R y Quarto, mientras que `work.tar.gz` corresponde a una versión comprimida lista para descargar o transferir a otro equipo.
 
 Una vez descargado y descomprimido el archivo, los scripts de R pueden ejecutarse directamente utilizando la estructura de directorios incluida en la carpeta exportada.
+
+## Reproducibilidad de resultados
+
+Este repositorio contiene los scripts y archivos necesarios para reproducir las tablas, figuras y análisis presentados en el estudio genómico de aislados clínicos de *Pseudomonas aeruginosa* pertenecientes al linaje ST-253.
+
+Debido al costo computacional de las etapas de ensamblaje, pulido, anotación y análisis filogenómico, los análisis primarios fueron ejecutados previamente en un entorno de computación de alto rendimiento (HPC). Posteriormente, se exportó un conjunto mínimo de archivos procesados a la carpeta `work/`, la cual contiene toda la información necesaria para reproducir los resultados finales sin necesidad de volver a ejecutar el pipeline bioinformático completo.
+
+Los datos exportados incluyen resultados de control de calidad de lecturas y ensamblajes, clasificación taxonómica, tipificación MLST, filogenia basada en SNPs, anotaciones genómicas y detección de genes de resistencia antimicrobiana.
+
+El documento `reporte_tablas_figuras.qmd` utiliza exclusivamente los archivos contenidos en la carpeta `work/` para generar de forma reproducible todas las tablas y figuras empleadas en el manuscrito. De esta manera, cualquier usuario puede reconstruir los resultados finales sin requerir acceso al servidor HPC ni a los archivos intermedios generados durante el procesamiento inicial.
+
+La estructura general de la parte de visualización es la siguiente:
+
+```text
+scripts_R/        Scripts de análisis y procesamiento en R
+work/           Datos procesados exportados desde HPC
+reporte_tablas_figuras.qmd    Documento reproducible con tablas y figuras
+reporte_tablas_figuras.html   Documetno HTML para ver tablas y figuras
+```
