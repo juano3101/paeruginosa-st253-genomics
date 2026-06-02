@@ -581,7 +581,7 @@ mlst --version
 
 ## Ejecutar tipificación MLST
 
-El script `mlst_typing.sh` realiza la identificación automática del sequence type para todos los ensamblajes incluidos en el conjunto final de datos.
+El script `mlst_typing.sh` realiza la identificación automática del sequence type para los ensamblajes filtrados sin pulido y para los ensamblajes filtrados pulidos con `Medaka`. Esta comparación permitió evaluar si el proceso de pulido modificaba la asignación del ST o la detección de los alelos MLST.
 
 ```bash
 chmod +x scripts/07_typing/mlst_typing.sh
