@@ -4,43 +4,96 @@ set -euo pipefail
 OUT_DIR="${1:-work}"
 
 rm -rf "$OUT_DIR"
-mkdir -p "$OUT_DIR"/{metadata,qc/raw,qc/filt,qc_assembly/busco,qc_assembly/quast,kraken,mlst,phylogeny,annotation/amrfinder,annotation/bakta}
+
+mkdir -p \
+  "$OUT_DIR"/metadata \
+  "$OUT_DIR"/qc/raw \
+  "$OUT_DIR"/qc/filt \
+  "$OUT_DIR"/qc_assembly/busco/raw \
+  "$OUT_DIR"/qc_assembly/busco/filt \
+  "$OUT_DIR"/qc_assembly/busco/raw_medaka \
+  "$OUT_DIR"/qc_assembly/busco/filt_medaka \
+  "$OUT_DIR"/qc_assembly/quast \
+  "$OUT_DIR"/kraken/controles \
+  "$OUT_DIR"/kraken/muestras \
+  "$OUT_DIR"/mlst \
+  "$OUT_DIR"/phylogeny \
+  "$OUT_DIR"/annotation/bakta \
+  "$OUT_DIR"/annotation/amrfinder
 
 echo "Exportando a: $OUT_DIR"
 
 # metadata
-cp -v data/metadata/metadata.xlsx "$OUT_DIR/metadata/" 2>/dev/null || true
+cp -v data/metadata/metadata.xlsx "$OUT_DIR"/metadata/
 
-# QC lecturas
-cp -v results/qc/raw/multiqc_general_stats.txt "$OUT_DIR/qc/raw/" 2>/dev/null || true
-cp -v results/qc/filtered/multiqc_general_stats.txt "$OUT_DIR/qc/filt/" 2>/dev/null || true
+# qc
+cp -v results/qc/raw/multiqc/multiqc_data/multiqc_general_stats.txt "$OUT_DIR"/qc/raw/
+cp -v results/qc/filt/multiqc/multiqc_data/multiqc_general_stats.txt "$OUT_DIR"/qc/filt/
 
-# QC ensamblajes
-cp -rv results/assembly_qc/busco/* "$OUT_DIR/qc_assembly/busco/" 2>/dev/null || true
-cp -rv results/assembly_qc/quast/* "$OUT_DIR/qc_assembly/quast/" 2>/dev/null || true
+# assembly_qc - BUSCO
+cp -rv results/assembly_qc/busco/raw/* "$OUT_DIR"/qc_assembly/busco/raw/
+cp -rv results/assembly_qc/busco/filtered/* "$OUT_DIR"/qc_assembly/busco/filt/
+cp -rv results/assembly_qc/busco/medaka_raw/* "$OUT_DIR"/qc_assembly/busco/raw_medaka/
+cp -rv results/assembly_qc/busco/medaka_filtered/* "$OUT_DIR"/qc_assembly/busco/filt_medaka/
 
-# Kraken2
-find results/taxonomy/kraken2/medaka_filtered -type f \( -name "*_report.txt" -o -name "*_output.txt" \) -exec cp -v {} "$OUT_DIR/kraken/" \; 2>/dev/null || true
+# assembly_qc - QUAST
+cp -v results/assembly_qc/quast/raw/report.tsv "$OUT_DIR"/qc_assembly/quast/quast_raw.tsv
+cp -v results/assembly_qc/quast/filtered/report.tsv "$OUT_DIR"/qc_assembly/quast/quast_filt.tsv
+cp -v results/assembly_qc/quast/medaka_raw/report.tsv "$OUT_DIR"/qc_assembly/quast/quast_raw_medaka.tsv
+cp -v results/assembly_qc/quast/medaka_filtered/report.tsv "$OUT_DIR"/qc_assembly/quast/quast_filt_medaka.tsv
 
-# MLST
-find results/typing -type f \( -name "*.tsv" -o -name "*.txt" \) -exec cp -v {} "$OUT_DIR/mlst/" \; 2>/dev/null || true
+# kraken
+cp -v results/taxonomy/kraken2/medaka_filtered/controles/*_output.txt "$OUT_DIR"/kraken/controles/
+cp -v results/taxonomy/kraken2/medaka_filtered/muestras/*_output.txt "$OUT_DIR"/kraken/muestras/
 
-# Filogenia
-cp -v results/phylogeny/snippy_iqtree/core.snp.aln.treefile "$OUT_DIR/phylogeny/" 2>/dev/null || true
-cp -v results/phylogeny/snippy_iqtree/core.snp.aln "$OUT_DIR/phylogeny/" 2>/dev/null || true
-cp -v results/phylogeny/snippy_iqtree/core.full.aln "$OUT_DIR/phylogeny/" 2>/dev/null || true
-cp -v results/phylogeny/snippy_iqtree/core.snp.aln.iqtree "$OUT_DIR/phylogeny/" 2>/dev/null || true
-cp -v results/phylogeny/snippy_iqtree/core.snp.aln.log "$OUT_DIR/phylogeny/" 2>/dev/null || true
-cp -v results/phylogeny/snippy_iqtree/snippy_distancias.tsv "$OUT_DIR/phylogeny/" 2>/dev/null || true
+# mlst
+cp -v results/typing/mlst/mlst_results.tsv "$OUT_DIR"/mlst/
 
-# AMRFinderPlus
-find results/annotation/amrfinder -name "*.tsv" -exec cp -v {} "$OUT_DIR/annotation/amrfinder/" \; 2>/dev/null || true
+# phylogeny
+cp -v results/phylogeny/snippy_iqtree/core.snp.aln "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.full.aln "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.aln "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.snp.aln.iqtree "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.snp.aln.log "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.snp.aln.contree "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.snp.aln.ufboot "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.tab "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.txt "$OUT_DIR"/phylogeny/
+cp -v results/phylogeny/snippy_iqtree/core.snp.aln.treefile "$OUT_DIR"/
+cp -v results/phylogeny/snippy_iqtree/snippy_distancias.tsv "$OUT_DIR"/
 
-# Bakta
-find results/annotation/bakta -type f \( -name "*.faa" -o -name "*.fna" -o -name "*.gff3" -o -name "*.tsv" -o -name "*.json" \) ! -name "*.hypotheticals.*" -exec cp -v {} "$OUT_DIR/annotation/bakta/" \; 2>/dev/null || true
+# annotation - Bakta
+for d in results/annotation/bakta/*; do
+  [ -d "$d" ] || continue
+  muestra=$(basename "$d")
+  mkdir -p "$OUT_DIR/annotation/bakta/$muestra"
 
+  cp "$d"/*.faa "$OUT_DIR/annotation/bakta/$muestra/" 2>/dev/null || true
+  cp "$d"/*.fna "$OUT_DIR/annotation/bakta/$muestra/" 2>/dev/null || true
+  cp "$d"/*.gff3 "$OUT_DIR/annotation/bakta/$muestra/" 2>/dev/null || true
+  cp "$d"/*.tsv "$OUT_DIR/annotation/bakta/$muestra/" 2>/dev/null || true
+  cp "$d"/*.json "$OUT_DIR/annotation/bakta/$muestra/" 2>/dev/null || true
+  cp "$d"/*.txt "$OUT_DIR/annotation/bakta/$muestra/" 2>/dev/null || true
+
+  rm -f "$OUT_DIR/annotation/bakta/$muestra"/*.hypotheticals.*
+done
+
+# annotation - AMRFinderPlus
+for d in results/annotation/amrfinder/*; do
+  [ -d "$d" ] || continue
+  muestra=$(basename "$d")
+  mkdir -p "$OUT_DIR/annotation/amrfinder/$muestra"
+
+  cp "$d"/*.tsv "$OUT_DIR/annotation/amrfinder/$muestra/"
+done
+
+# comprimir exportación
 tar -czf "${OUT_DIR}.tar.gz" "$OUT_DIR"
 
-echo "Listo:"
+echo
+echo "Exportación finalizada"
+echo "Carpeta: $OUT_DIR"
+echo "Archivo comprimido: ${OUT_DIR}.tar.gz"
+
 du -sh "$OUT_DIR"
 ls -lh "${OUT_DIR}.tar.gz"
