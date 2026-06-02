@@ -33,6 +33,7 @@ Las versiones del sistema operativo, software, entornos y herramientas bioinform
   - [09.1. Anotación con Prokka](#091-con-prokka)
   - [09.2. Anotación con Bakta](#092-anotación-con-bakta)
   - [09.3. AMRFinderPlus](#093-amrfinderplus)
+- [10. Exportación de resultados](#10-exportación-de-resultados)
 
 # 00. Descargar secuencias
 
@@ -891,3 +892,89 @@ Los resultados se generan en:
 results/annotation/amrfinder/
 logs/annotation/amrfinder/
 ```
+
+
+# 10. Exportación de resultados
+
+Este script permite generar una versión portátil y reproducible de los resultados obtenidos durante la ejecución del pipeline bioinformático. Su objetivo es recopilar únicamente los archivos necesarios para la generación de tablas, figuras y análisis estadísticos en R y Quarto o en Python. Esto evita la transferencia de archivos intermedios de grandes como lecturas FASTQ, ensamblajes temporales, archivos de alineamiento o los directorios completos.
+
+La carpeta exportada puede ser descargada desde el servidor y utilizada directamente en cualquier equipo local para reproducir los análisis y visualizaciones presentados en la tesis, sin necesidad de volver a ejecutar el pipeline bioinformático completo.
+
+## Información exportada
+
+El script recopila los siguientes resultados:
+
+### Metadata
+
+```text
+metadata.xlsx
+```
+
+### Control de calidad de lecturas
+
+```text
+multiqc_general_stats.txt (lecturas crudas)
+multiqc_general_stats.txt (lecturas filtradas)
+```
+
+### Evaluación de ensamblajes
+
+```text
+Resultados BUSCO (.json)
+Resultados QUAST (.tsv)
+```
+
+### Clasificación taxonómica
+
+```text
+Reportes Kraken2
+```
+
+### Tipificación MLST
+
+```text
+Resultados MLST (.tsv)
+```
+
+### Filogenia
+
+```text
+Árbol filogenético (.treefile)
+Matriz de distancias SNP (.tsv)
+Alineamientos core genome (.aln)
+Resumen IQ-TREE
+```
+
+### Anotación genómica
+
+```text
+Archivos Bakta (.faa, .fna, .gff3, .tsv, .json)
+Resultados AMRFinderPlus (.tsv)
+```
+
+## Ejecución
+
+Ejecutar utilizando el nombre de carpeta deseado para la exportación:
+```bash
+chmod +x scripts/export_data/export_data.sh
+bash scripts/export_data/export_data.sh work
+```
+
+Si no se especifica un nombre, se utilizará por defecto:
+
+```text
+work
+```
+
+## Resultados
+
+Al finalizar, el script genera:
+
+```text
+work/
+work.tar.gz
+```
+
+La carpeta `work/` contiene todos los archivos necesarios para el análisis en R y Quarto, mientras que `work.tar.gz` corresponde a una versión comprimida lista para descargar o transferir a otro equipo.
+
+Una vez descargado y descomprimido el archivo, los scripts de R pueden ejecutarse directamente utilizando la estructura de directorios incluida en la carpeta exportada.
