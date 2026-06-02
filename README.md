@@ -12,6 +12,10 @@ cd paeruginosa-st253-genomics
 
 ![Pipeline bioinformático](figures/pipeline.svg)
 
+Las versiones del sistema operativo, software, entornos y herramientas bioinformáticas utilizadas durante el desarrollo y ejecución de este pipeline se encuentran documentadas en el repositorio oficial del proyecto:
+
+[software_versions.txt](https://github.com/juano3101/paeruginosa-st253-genomics/blob/main/environment/software_versions.txt).
+
 # Índice
 
 - [00. Descargar secuencias](#00-descargar-secuencias)
@@ -457,7 +461,7 @@ conda activate kraken2_env
 
 Verificar instalación:
 
-```bash id="4fqzh3"
+```bash
 kraken2 --version
 ```
 
@@ -465,7 +469,7 @@ kraken2 --version
 
 En este pipeline se utilizó la base de datos precompilada estándar de 8 GB (`standard_08gb`).
 
-```bash id="11icrc"
+```bash
 mkdir -p databases/kraken2
 
 mkdir -p databases/kraken2
@@ -479,7 +483,7 @@ cd ../..
 
 Verificar la base descargada:
 
-```bash id="8c4dsd"
+```bash
 ls databases/kraken2/standard_08gb/
 ```
 
@@ -487,7 +491,7 @@ ls databases/kraken2/standard_08gb/
 
 El script `kraken2_taxonomy.sh` permite clasificar ensamblajes pulidos y controles de referencia.
 
-```bash id="ly3k1y"
+```bash
 chmod +x scripts/06_taxonomy/kraken2_taxonomy.sh
 bash scripts/06_taxonomy/kraken2_taxonomy.sh
 ```
@@ -538,19 +542,6 @@ Durante esta etapa se recopilaron los ensamblajes finales de todas las muestras 
 chmod +x scripts/06_taxonomy/final_dataset.sh
 bash scripts/06_taxonomy/final_dataset.sh
 ```
-
-### Criterios de inclusión
-
-Se incluyeron únicamente ensamblajes que cumplieron los siguientes criterios:
-
-* Ensamblajes obtenidos a partir de lecturas filtradas.
-* Ensamblajes pulidos mediante Medaka.
-* Confirmación taxonómica compatible con *Pseudomonas aeruginosa*.
-* Ausencia de evidencia significativa de contaminación taxonómica.
-
-### Criterios de exclusión
-
-Se excluyó el ensamblaje correspondiente a Rectal_P11__SRR26135179 debido a la detección de contaminación polimicrobiana durante la evaluación taxonómica.
 
 Los ensamblajes finales utilizados en los análisis posteriores se almacenan en:
 
@@ -836,11 +827,11 @@ amrfinder --version
 
 ## Ejecutar detección de genes AMR
 
-El script `amrfinder_annotation.sh` ejecuta automáticamente AMRFinderPlus sobre las anotaciones generadas por Bakta.
+El script `amrfinderplus.sh` ejecuta automáticamente AMRFinderPlus sobre las anotaciones generadas por Bakta.
 
 ```bash
-chmod +x scripts/09_annotation/amrfinder_annotation.sh
-bash scripts/09_annotation/amrfinder_annotation.sh
+chmod +x scripts/09_annotation/amrfinderplus.sh
+bash scripts/09_annotation/amrfinderplus.sh
 ```
 
 Por defecto, el script utiliza:
@@ -850,12 +841,6 @@ results/annotation/bakta
 ```
 
 como directorio de entrada.
-
-También puede ejecutarse indicando manualmente el directorio de entrada:
-
-```bash
-bash scripts/09_annotation/amrfinder_annotation.sh results/annotation/bakta
-```
 
 ## Parámetros utilizados
 
