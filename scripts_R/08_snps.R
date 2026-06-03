@@ -45,14 +45,16 @@ etiquetas_matriz <- matrix(
 diag(etiquetas_matriz) <- ""
 diag(distancias_pct) <- NA
 
-anotacion_clado <- grupos[rownames(distancias_clinicas)]
+anotacion_grupo <- grupos[rownames(distancias_clinicas)]
 
 ha_col <- HeatmapAnnotation(
-  Clado = anotacion_clado, col = list(Clado = colores_clados),
+  Grupo = anotacion_grupo,
+  col = list(Grupo = colores_clados),
   annotation_name_gp = gpar(fontsize = 10, fontface = "bold"))
 
 ha_row <- rowAnnotation(
-  Clado = anotacion_clado, col = list(Clado = colores_clados),
+  Grupo = anotacion_grupo,
+  col = list(Grupo = colores_clados),
   annotation_name_gp = gpar(fontsize = 10, fontface = "bold"))
 
 p_snp_final <- Heatmap(

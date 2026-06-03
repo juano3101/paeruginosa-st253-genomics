@@ -69,6 +69,12 @@ tabla_bombas_efflux <- tabla_amr_filtrada %>%
 
 tabla_amr_no_efflux <- tabla_amr_filtrada %>%
   filter(!str_detect(Class, "EFFLUX"))
+tabla_amr_no_efflux <- tabla_amr_no_efflux %>%
+  filter(!`Element symbol` %in% c(
+    "fptA_G319AfsTer32",
+    "fptA_K75SfsTer42",
+    "fptA_S460AfsTer23"
+  ))
 
 tabla_AMR_adquiridos <- tabla_amr_no_efflux %>% filter(Subtype == "AMR")
 tabla_POINT_mutaciones <- tabla_amr_no_efflux %>% filter(Subtype == "POINT")

@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
   message = FALSE,     # Oculta mensajes
   warning = FALSE,     # Oculta advertencias
   error = FALSE,       # Oculta errores
-  cache = TRUE,       # Usa caché
+  cache = FALSE,       # Usa caché
   include = TRUE,      # Sí incluye los resultados
   eval = TRUE          # Evalúa los chunks
 )
@@ -30,7 +30,9 @@ source("scripts_R/00_cargar_paquetes.R")
 
 Este documento presenta un análisis reproducible de los principales resultados obtenidos a partir de la caracterización genómica de aislados clínicos de *Pseudomonas aeruginosa* pertenecientes al linaje ST-253. Utilizando los datos procesados exportados desde el entorno de computación de alto rendimiento (HPC), se generaron nuevamente las tablas y figuras empleadas en el manuscrito, incluyendo los análisis de control de calidad de lecturas y ensamblajes, clasificación taxonómica, tipificación MLST, filogenia basada en SNPs y caracterización del resistoma. El objetivo de este documento es facilitar la reproducibilidad computacional de los resultados y proporcionar una representación integrada de los análisis realizados mediante un flujo de trabajo completamente reproducible en R y Quarto.
 
-# Descripción de las muestras
+
+
+## Características de las muestras
 
 ```{r cargar_datos, include=FALSE, cache=FALSE}
 
@@ -45,16 +47,17 @@ source("scripts_R/02_tabla_metadata.R")
 tabla_metadata_ft
 ```
 
-# Calidad de las secuencias
+## Análisis de calidad de lecturas `Nanopore`
 
 ```{r 03_qc_reads.R}
 
 source("scripts_R/03_qc_reads.R")
 ```
 
+
 ```{r fig-qc-phred}
 #| label: fig-qc-phred
-#| fig-cap: "Cambio de calidad promedio Phred tras el filtrado de lecturas Nanopore."
+#| fig-cap: "Cambio de calidad promedio Phred tras el filtrado de lecturas `Nanopore`."
 #| fig-width: 9
 #| fig-height: 6
 
@@ -63,13 +66,12 @@ grafico_phred
 
 ```{r fig-qc-phred}
 #| label: tbl-qc-nanopore
-#| tbl-cap: "Métricas de calidad de lecturas Nanopore antes y después del filtrado."
-
+#| tbl-cap: "Métricas de calidad de lecturas `Nanopore` antes y después del filtrado."
 
 tabla_qc_resultados_ft
 ```
 
-# Calidad de ensamblados
+## Análisis de calidad de ensamblados genómicos
 
 ```{r 04_qc_assembly.R}
 source("scripts_R/04_qc_assembly.R")
@@ -89,7 +91,8 @@ tabla_resumen_estrategia_ft
 tabla_ensamblaje_final_ft
 ```
 
-# Identificación taxonómica
+## Evaluación taxonómica de ensamblados y tipificación MLST
+
 
 ```{r table_kraken}
 #| label: tbl-kraken
@@ -98,8 +101,6 @@ tabla_ensamblaje_final_ft
 source("scripts_R/05_kraken.R")
 tabla_resumen_especies_ft
 ```
-
-# Tipificación MLST
 
 ```{r 06_mlst}
 #| label: fig-mlst-medaka
@@ -113,21 +114,28 @@ source("scripts_R/06_mlst.R")
 p_st_final
 ```
 
-# Filogenia
+
+```{r tbl-trpE}
+#| label: tbl-trpE
+#| tbl-cap: "Diferencias nucleotídicas y aminoacídicas identificadas entre los alelos trpE-433 y trpE-3."
+
+source("scripts_R/06.1_gen_st.R")
+ft_trpE
+```
+
+## Análisis filogenómico basado en SNPs
 
 ```{r fig-filogenia-st253}
 #| label: fig-filogenia-st253
-#| fig-cap: "Árboles filogenómicos basados en SNPs del genoma core de aislados clínicos de Pseudomonas aeruginosa ST-253. El panel superior (A) muestra la relación filogenómica global incluyendo la referencia PA14 (ST-253) y el outgroup PAO1 (ST-549). El panel inferior (B) muestra la microevolución intra-linaje ST-253, resaltando los principales clados clínicos observados."
+#| fig-cap: "Árboles filogenómicos inferidos a partir de 13 SNPs identificados en un alineamiento del genoma núcleo de 6,537,648 pb compartido entre los aislados analizados. El panel superior (A) muestra la relación filogenómica global incluyendo la referencia PA14 (ST-253) y el outgroup PAO1 (ST-549). El panel inferior (B) muestra la microevolución intra-linaje ST-253, resaltando los principales grupos clínicos observados."
 #| fig-width: 15
-#| fig-height: 11
+#| fig-height: 16
 #| out-width: "100%"
 #| fig-align: center
 
 source("scripts_R/07_filogenia.R")
 figura_phyl_1
 ```
-
-# Matriz de distancias basadas en SNPs
 
 ```{r fig-heatmap-snp}
 #| label: fig-heatmap-snp
@@ -142,7 +150,29 @@ grid::grid.newpage()
 grid::grid.draw(p_snp_final_completo)
 ```
 
-# Resistoma
+```{r fig-divergencia-calidad}
+#| label: fig-divergencia-calidad
+#| fig-cap: "Relación entre la divergencia genética respecto a la cepa de referencia PA14 y diferentes métricas de calidad del ensamblaje. (A) Distancia genética versus posiciones ambiguas (N) en el alineamiento del genoma núcleo. (B) Distancia genética versus N50 del ensamblaje. (C) Distancia genética versus número de contigs. Los resultados muestran que los aislados más divergentes tendieron a presentar ensamblajes más fragmentados y una mayor cantidad de posiciones ambiguas."
+#| fig-width: 11
+#| fig-height: 5
+#| out-width: "100%"
+#| fig-align: center
+
+source("scripts_R/07.1_filogenia.R")
+
+fig_divergencia_calidad
+```
+
+
+```{r tbl-correlaciones-divergencia}
+#| label: tbl-correlaciones-divergencia
+#| tbl-cap: "Correlaciones de Spearman entre la divergencia genética respecto a PA14 y distintas métricas de calidad del ensamblaje."
+
+ft_correlaciones
+```
+
+## Análisis de Resistoma
+
 
 ```{r 09_resistoma}
 source("scripts_R/09_resistoma.R")
@@ -159,22 +189,26 @@ p_final_resist
 
 ```{r fig-perfil-resistoma}
 #| label: fig-perfil-resistoma
-#| fig-cap: "Perfil de genes y mutaciones asociados a resistencia antimicrobiana en los aislados clínicos de *Pseudomonas aeruginosa* ST-253. Los colores representan genes AMR adquiridos, mutaciones puntuales y mutaciones disruptivas identificadas mediante AMRFinderPlus."
+#| fig-cap: "Perfil de genes y mutaciones asociados a resistencia antimicrobiana en los aislados clínicos de *Pseudomonas aeruginosa* ST-253. Los colores representan genes AMR adquiridos, mutaciones puntuales y mutaciones disruptivas identificadas mediante AMRFinderPlus"
 #| fig-width: 14
 #| fig-height: 6
 
-draw(p_heatmap_genes_detalle, merge_legend = TRUE)
+p_heatmap_genes_detalle
 ```
 
-# Genotipo más Fenotipo
 
-```{r fig-filogenia-resistoma}
-#| label: fig-filogenia-resistoma
-#| fig-cap: "Relación filogenética, perfil resistómico y fenotipo antimicrobiano de los aislados clínicos de *Pseudomonas aeruginosa* ST-253. El árbol filogenético basado en SNPs del core genome se muestra junto con información clínica y molecular de cada aislado, incluyendo sexo, tipo de muestra, paciente, genes y mutaciones asociados a resistencia antimicrobiana, así como el perfil fenotípico de susceptibilidad a antibióticos. Los colores representan genes AMR adquiridos, mutaciones puntuales, mutaciones disruptivas y categorías de resistencia fenotípica. Las barras superiores agrupan los genes y antibióticos según su mecanismo de resistencia y familia antimicrobiana, respectivamente. Abreviaturas de antibióticos: AMK = amikacina, GEN = gentamicina, CAZ = ceftazidima, FEP = cefepime, IPM = imipenem, MEM = meropenem, TZP = piperacilina/tazobactam, CIP = ciprofloxacina y LVX = levofloxacina."
+```{r fig-resistoma-fenotipo}
+#| label: fig-resistoma-fenotipo
+#| fig-cap: "Perfil resistómico y fenotipo antimicrobiano de los aislados clínicos de *Pseudomonas aeruginosa* ST-253, ordenados por paciente. Se muestra información clínica y molecular de cada aislado, incluyendo paciente, sexo, tipo de muestra, genes y mutaciones asociados a resistencia antimicrobiana, así como el perfil fenotípico de susceptibilidad a antibióticos. Los colores representan genes AMR adquiridos, mutaciones puntuales, mutaciones disruptivas y categorías de susceptibilidad fenotípica. Las barras superiores agrupan los determinantes genéticos y antibióticos según su mecanismo de resistencia y familia antimicrobiana, respectivamente. Abreviaturas: AMK = amikacina, GEN = gentamicina, CAZ = ceftazidima, FEP = cefepime, IPM = imipenem, MEM = meropenem, TZP = piperacilina/tazobactam, CIP = ciprofloxacina y LVX = levofloxacina."
 #| fig-width: 16
 #| fig-height: 9
 
 source("scripts_R/10_genotipo_fenotipo.R")
 
-figura_final
+# Guardamos todo el dibujo procesado con sus leyendas en una variable
+draw(
+  figura_final,
+  ht_gap = unit(c(3, 3), "mm"), 
+  annotation_legend_list = grupo_leyendas
+)
 ```

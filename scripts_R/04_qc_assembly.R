@@ -142,18 +142,21 @@ tabla_resumen_estrategia <- tabla_calidad_ensamblaje %>%
     .groups = "drop") %>%
   dplyr::rename(Estrategia = estrategia)
 
-tabla_resumen_estrategia_ft <- flextable(tabla_resumen_estrategia) %>%
-  theme_booktabs() %>%
-  fontsize(size = 6.2, part = "all") %>%
-  padding(padding = 1, part = "all") %>%
-  line_spacing(space = 0.85, part = "all") %>%
-  height(height = 0.32, part = "body") %>%
-  height(height = 0.38, part = "header") %>%
-  width(width = 0.58) %>%
-  bold(part = "header") %>%
-  align(align = "center", part = "all") %>%
-  align(j = "Estrategia", align = "left", part = "all") %>%
-  bg(i = seq(2, nrow(tabla_resumen_estrategia), 2), bg = "#F2F2F2")
+tabla_resumen_estrategia_ft <- flextable::flextable(tabla_resumen_estrategia) %>%
+  flextable::theme_booktabs() %>%
+  flextable::fontsize(size = 6.2, part = "all") %>%
+  flextable::padding(padding = 1, part = "all") %>%
+  flextable::line_spacing(space = 0.85, part = "all") %>%
+  flextable::height(height = 0.32, part = "body") %>%
+  flextable::height(height = 0.38, part = "header") %>%
+  flextable::width(width = 0.58) %>%
+  flextable::bold(part = "header") %>%
+  flextable::align(align = "center", part = "all") %>%
+  flextable::align(j = "Estrategia", align = "left", part = "all") %>%
+  flextable::bg(
+    i = seq(2, nrow(tabla_resumen_estrategia), 2),
+    bg = "#F2F2F2"
+  )
 
 ### RESUMEN POR MUESTRA FINAL
 
@@ -191,19 +194,19 @@ tabla_ensamblaje_final <- tabla_calidad_ensamblaje %>%
     `Genes single-copy\n(%)` = busco_single_pct,
     `Genes duplicados\n(%)` = busco_duplicados_pct)
 
-tabla_ensamblaje_final_ft <- flextable(tabla_ensamblaje_final) %>%
-  theme_booktabs() %>%
-  fontsize(size = 6.6, part = "all") %>%
-  padding(padding = 1, part = "all") %>%
-  line_spacing(space = 0.85, part = "all") %>%
-  height(height = 0.28, part = "body") %>%
-  height(height = 0.36, part = "header") %>%
-  bold(part = "header") %>%
-  align(align = "center", part = "all") %>%
-  align(j = "Aislamiento", align = "left", part = "all") %>%
-  bg(i = seq(2, nrow(tabla_ensamblaje_final), 2), bg = "#F2F2F2") %>%
-  bg(i = ~ Aislamiento == "Rectal_P11", bg = "#FDEDEC") %>%
-  bold(i = ~ Aislamiento == "Rectal_P11", bold = TRUE) %>%
-  width(width = 0.58) %>%
-  autofit()
+tabla_ensamblaje_final_ft <- flextable::flextable(tabla_ensamblaje_final) %>%
+  flextable::theme_booktabs() %>%
+  flextable::fontsize(size = 6.6, part = "all") %>%
+  flextable::padding(padding = 1, part = "all") %>%
+  flextable::line_spacing(space = 0.85, part = "all") %>%
+  flextable::height(height = 0.28, part = "body") %>%
+  flextable::height(height = 0.36, part = "header") %>%
+  flextable::bold(part = "header") %>%
+  flextable::align(align = "center", part = "all") %>%
+  flextable::align(j = "Aislamiento", align = "left", part = "all") %>%
+  flextable::bg(i = seq(2, nrow(tabla_ensamblaje_final), 2), bg = "#F2F2F2") %>%
+  flextable::bg(i = ~ Aislamiento == "Rectal_P11", bg = "#FDEDEC") %>%
+  flextable::bold(i = ~ Aislamiento == "Rectal_P11", bold = TRUE) %>%
+  flextable::width(width = 0.58) %>%
+  flextable::autofit()
 
