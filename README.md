@@ -9,7 +9,7 @@ Este repositorio contiene los scripts y el flujo de trabajo desarrollados como p
 Máster Universitario en Bioinformática y Bioestadística  
 Universitat Oberta de Catalunya (UOC), 2026
 
-**[Consultar el Trabajo Final de Máster completo](AQUI_VA_EL_LINK)**
+**[Consultar el Trabajo Final de Máster completo](https://drive.google.com/file/d/1wz6G63PZ6JzWtGcd-gPTq6Eoe-CBiMyY/view?usp=sharing)**
 
 ## Clonar repositorio
 
