@@ -1,6 +1,15 @@
 # *Pseudomonas aeruginosa* ST-253 Genomics Pipeline
 
-Pipeline bioinformático reproducible para el análisis genómico de aislados clínicos de *Pseudomonas aeruginosa* ST-253 utilizando secuenciación Nanopore.
+Pipeline bioinformático reproducible para el análisis genómico de aislados clínicos de *Pseudomonas aeruginosa* ST-253 utilizando secuenciación de genoma completo (WGS) mediante Oxford Nanopore.
+
+Este repositorio contiene los scripts y el flujo de trabajo desarrollados como parte del Trabajo Final de Máster:
+
+**Análisis filogenómico y del resistoma de *Pseudomonas aeruginosa* ST-253 mediante secuenciación de genoma completo en Ecuador**
+
+Máster Universitario en Bioinformática y Bioestadística  
+Universitat Oberta de Catalunya (UOC), 2026
+
+**[Consultar el Trabajo Final de Máster completo](AQUI_VA_EL_LINK)**
 
 ## Clonar repositorio
 
